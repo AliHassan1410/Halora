@@ -1,0 +1,194 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_crumbs": false,
+        "crumb_current": "",
+        "parent_label": "Our Story",
+        "parent_url": "/pages/about",
+        "heading": "<p>Why <em>HALORA.</em></p>",
+        "subheading": "A note on the salt, the country it comes from, and the small ceremonies that turned into a brand."
+      }
+    },
+    "main": {
+      "type": "halora-rich-text",
+      "blocks": {
+        "kicker": {
+          "type": "kicker",
+          "settings": {
+            "text": "A letter from the founder · 6 min read"
+          }
+        },
+        "p1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>I grew up watching pink salt taken for granted in Pakistan. It sat in every kitchen, on every table, in the spice tins of every neighbour. It was used to flavour eggs, sprinkle over fruit, settle a stomach, brine a fish. Nobody talked about where it came from, because everyone knew. The Salt Range was a thing on a map.</p>"
+          }
+        },
+        "p2": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Years later, in a department store in another country, I saw the same salt sitting in a $40 jar with a French label. The label said &ldquo;Himalayan.&rdquo; It did not say Pakistan.</p>"
+          }
+        },
+        "p3": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>That was the first thing that put me on this path. Not the markup — I am not naïve about that. It was the absence of the place. A whole country had been edited out of a story about its own mineral. I began collecting that absence quietly, in conversations and shop visits, until it became loud enough to do something about.</p>"
+          }
+        },
+        "h1": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>What I wanted to <em>build.</em></p>"
+          }
+        },
+        "p4": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>A Pakistani apothecary that holds the salt the way it deserves to be held. Quiet, considered, slow. Not loud, not patriotic, not corrective — just present. With the country's name on the label, in small type, where it always should have been.</p>"
+          }
+        },
+        "p5": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>I wanted four directions because the salt does four things well — it cleanses, it holds warmth, it glows, it seasons. So we built four houses, one for each: Skincare, Therapy, Light, Kitchen. Nineteen pieces in all, hand-blended in small batches in a small studio in Lahore. One pair of hands. Mine, for now.</p>"
+          }
+        },
+        "q1": {
+          "type": "quote",
+          "settings": {
+            "text": "<p>The salt of small ceremonies.</p>"
+          }
+        },
+        "p6": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>The tagline that came first was the one that stayed. Small ceremonies are the architecture of better living — the bath at the end of a long day, the finishing pinch on a good plate, the soft glow on a quiet night. The salt sits at the centre of all of them. It always did. We are just naming it now.</p>"
+          }
+        },
+        "h2": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>What we have <em>chosen to leave out.</em></p>"
+          }
+        },
+        "p7": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Equally important to what HALORA is, is what it isn't. No synthetic fragrance. No parabens, no SLS, no fillers. No gold-coded hardware — silver only, because the mineral is the warm thing in the room; everything else stays cool. No imported salt. No factory line. No plastic if glass will do.</p>"
+          }
+        },
+        "p8": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>None of these are marketing rules. They came from working with the material. The salt does the work. Anything we add has to earn its place.</p>"
+          }
+        },
+        "h3": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Where we go <em>from here.</em></p>"
+          }
+        },
+        "p9": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>We launch in Pakistan first — because we are starting where the salt is from. International shipping opens soon. Wholesale comes later.</p>"
+          }
+        },
+        "p10": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>If any of this lands with you, I would love to have you in the early circle. Sign up to the journal, follow us on Instagram (<a href=\"https://instagram.com/halora.living\">@halora.living</a>), or write to me directly through the <a href=\"/pages/contact\">contact page</a>. Every email is read by the same pair of hands that mixed your scrub.</p>"
+          }
+        },
+        "p11": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Thank you for being here.</p><p>— <em>The Founder</em><br>Lahore</p>"
+          }
+        }
+      },
+      "block_order": [
+        "kicker",
+        "p1",
+        "p2",
+        "p3",
+        "h1",
+        "p4",
+        "p5",
+        "q1",
+        "p6",
+        "h2",
+        "p7",
+        "p8",
+        "h3",
+        "p9",
+        "p10",
+        "p11"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "care": {
+      "type": "halora-care-strip",
+      "blocks": {
+        "c1": {
+          "type": "trust",
+          "settings": {
+            "heading": "Delivery across Pakistan",
+            "body": "Hand-packed in Lahore."
+          }
+        },
+        "c2": {
+          "type": "trust",
+          "settings": {
+            "heading": "Nation Wide Delivery",
+            "body": "Within 3-5 Working Days."
+          }
+        },
+        "c3": {
+          "type": "trust",
+          "settings": {
+            "heading": "Seven-day Returns",
+            "body": "Unopened pieces, no questions."
+          }
+        },
+        "c4": {
+          "type": "trust",
+          "settings": {
+            "heading": "Hand-blended In-House",
+            "body": "Made in small batches."
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "subhero",
+    "main",
+    "care"
+  ]
+}

@@ -1,0 +1,208 @@
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+  assign logo = section.settings.logo
+-%}
+
+<halora-header class="halora-header color-{{ section.settings.color_scheme }}" data-sticky="{{ section.settings.sticky }}">
+  <div class="halora-header__row halora-header__row--logo page-width">
+    <div class="halora-header__left">
+      <button class="halora-header__hamburger" id="halora-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="halora-drawer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <a href="{{ routes.root_url }}" class="halora-header__wordmark" aria-label="{{ shop.name }}">
+      {%- comment -%}
+        This logo is the measured LCP element on mobile (Lighthouse, 2026-09-24).
+        width/height reserve its space before it loads; fetchpriority="high"
+        stops it queueing behind the stylesheets at Medium priority. CSS still
+        controls the displayed size (width:auto + height in rem), so these
+        attributes only establish the aspect ratio — no visual change.
+      {%- endcomment -%}
+      {%- if logo != blank -%}
+        <img src="{{ logo | image_url: width: 720 }}"
+             alt="{{ shop.name }}"
+             width="720"
+             height="{{ 720 | divided_by: logo.aspect_ratio }}"
+             fetchpriority="high"
+             loading="eager">
+      {%- else -%}
+        <img src="{{ 'halora-logo.svg' | asset_url }}"
+             alt="{{ shop.name }}"
+             width="682"
+             height="122"
+             fetchpriority="high"
+             loading="eager">
+      {%- endif -%}
+      {%- if section.settings.tagline != blank -%}
+        <small class="halora-header__tagline">{{ section.settings.tagline }}</small>
+      {%- endif -%}
+    </a>
+
+    <div class="halora-header__right">
+      <button type="button" class="halora-header__icon" id="halora-search-btn" aria-label="Open search" aria-expanded="false" aria-controls="halora-search-panel">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+      <a href="{{ routes.account_url }}" class="halora-header__icon" aria-label="{% if customer %}Account{% else %}Log in{% endif %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </a>
+      <a href="{{ routes.cart_url }}" class="halora-header__icon halora-header__cart" id="cart-icon-bubble" aria-label="Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="halora-header__cart-count{% if cart.item_count > 0 %} visible{% endif %}" id="cart-count">{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  {%- if menu != blank and menu.links.size > 0 -%}
+    <nav class="halora-header__row halora-header__row--nav page-width" aria-label="Main">
+      {%- for link in menu.links -%}
+        {%- if link.links.size > 0 -%}
+          {%- assign show_featured = false -%}
+          {%- if link.title contains 'Shop' and section.settings.feat_1 != blank -%}{%- assign show_featured = true -%}{%- endif -%}
+          <div class="halora-nav-item">
+            <a href="{{ link.url }}" class="halora-nav-link">{{ link.title }}</a>
+            <button class="halora-nav-toggle" aria-label="Toggle {{ link.title }} menu" aria-expanded="false">
+              <span class="halora-nav-chev"></span>
+            </button>
+            <div class="halora-megamenu{% if show_featured %} halora-megamenu--featured{% endif %}">
+              <div class="halora-megamenu__grid">
+                <div class="halora-megamenu__col">
+                  <h6>{{ link.title }}</h6>
+                  <div class="halora-megamenu__list">
+                    {%- for child in link.links -%}
+                      <a href="{{ child.url }}">
+                        <span class="halora-megamenu__name">{{ child.title }}</span>
+                      </a>
+                    {%- endfor -%}
+                  </div>
+                </div>
+                {%- if show_featured -%}
+                  <div class="halora-megamenu__col">
+                    <h6>{{ section.settings.feat_heading | default: 'House favourites' }}</h6>
+                    <div class="halora-mm-featured">
+                      {%- assign f_handles_str = section.settings.feat_1 | append: ',' | append: section.settings.feat_2 | append: ',' | append: section.settings.feat_3 -%}
+                      {%- assign f_handles = f_handles_str | split: ',' -%}
+                      {%- for raw_id in f_handles -%}
+                        {%- assign id = raw_id | strip -%}
+                        {%- assign p = all_products[id] -%}
+                        {%- if p != blank and p.handle != blank -%}
+                          <a class="halora-mm-feature" href="{{ p.url }}">
+                            <div class="halora-mm-feature__thumb">
+                              {%- if p.featured_image -%}
+                                <img src="{{ p.featured_image | image_url: width: 360 }}" alt="{{ p.title | escape }}" loading="lazy" width="180" height="225">
+                              {%- endif -%}
+                            </div>
+                            <p class="halora-mm-feature__h">{{ p.collections.first.title | default: 'HALORA' }}</p>
+                            <p class="halora-mm-feature__t">{{ p.title }}</p>
+                            <p class="halora-mm-feature__p">PKR {{ p.price | money_without_currency }}</p>
+                          </a>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+              <div class="halora-megamenu__footer">
+                <p>Hand-blended in Lahore · Ships across Pakistan</p>
+                <a href="{{ link.url }}">View all →</a>
+              </div>
+            </div>
+          </div>
+        {%- else -%}
+          <a href="{{ link.url }}" class="halora-nav-link halora-nav-link--solo">{{ link.title }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
+</halora-header>
+
+{%- comment -%} Search panel — slides down beneath the header on click {%- endcomment -%}
+<div class="halora-search" id="halora-search-panel" aria-hidden="true" role="dialog" aria-label="Search">
+  <form action="{{ routes.search_url }}" method="get" class="halora-search__form" role="search">
+    <input type="hidden" name="options[prefix]" value="last">
+    <input type="hidden" name="type" value="product">
+    <div class="halora-search__row">
+      <svg class="halora-search__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <label for="halora-search-input" class="visually-hidden">Search the apothecary</label>
+      <input id="halora-search-input" type="search" name="q" placeholder="Search the apothecary…" autocomplete="off" enterkeyhint="search">
+      <button type="button" class="halora-search__close" id="halora-search-close" aria-label="Close search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="halora-search__suggest" id="halora-search-suggest" aria-live="polite"></div>
+    <div class="halora-search__shortcuts">
+      <span class="halora-search__hint">Press <kbd>Enter</kbd> to see all results</span>
+      <a href="{{ routes.search_url }}" class="halora-search__see-all">Browse the full apothecary →</a>
+    </div>
+  </form>
+</div>
+<div class="halora-search-overlay" id="halora-search-overlay"></div>
+
+{%- comment -%} Mobile drawer {%- endcomment -%}
+<aside class="halora-drawer" id="halora-drawer" aria-hidden="true" aria-label="Mobile navigation">
+  <div class="halora-drawer__head">
+    <a href="{{ routes.root_url }}">
+      <img src="{{ 'halora-logo.svg' | asset_url }}" alt="{{ shop.name }}" width="120" height="28" class="halora-drawer__logo">
+    </a>
+    <button class="halora-drawer__close" id="halora-drawer-close" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <ul class="halora-drawer__nav">
+    {%- for link in menu.links -%}
+      <li class="halora-drawer__item">
+        {%- if link.links.size > 0 -%}
+          <div class="halora-drawer__row">
+            <a href="{{ link.url }}" class="halora-drawer__link">{{ link.title }}</a>
+            <button class="halora-drawer__toggle" aria-expanded="false">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+          <ul class="halora-drawer__sub">
+            {%- for child in link.links -%}
+              <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        {%- else -%}
+          <a href="{{ link.url }}" class="halora-drawer__link">{{ link.title }}</a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+    <li class="halora-drawer__divider"></li>
+    <li class="halora-drawer__item"><a href="{{ routes.account_url }}" class="halora-drawer__link">Account</a></li>
+    <li class="halora-drawer__item"><a href="/pages/care-guide" class="halora-drawer__link">Care guide</a></li>
+    <li class="halora-drawer__item"><a href="/pages/shipping-returns" class="halora-drawer__link">Shipping &amp; Returns</a></li>
+  </ul>
+</aside>
+<div class="halora-drawer-overlay" id="halora-drawer-overlay"></div>
+
+<script src="{{ 'halora-chrome.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Halora header",
+  "tag": "section",
+  "class": "section-halora-header",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "image_picker", "id": "logo", "label": "Logo (uses halora-logo.svg by default)" },
+    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" },
+    { "type": "text", "id": "tagline", "label": "Tagline under logo", "default": "Mineral Wellness · Choose Yourself" },
+    { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true },
+    { "type": "header", "content": "Shop dropdown — Featured (3 thumbs)" },
+    { "type": "text", "id": "feat_heading", "label": "Featured heading", "default": "House favourites" },
+    { "type": "product", "id": "feat_1", "label": "Featured 1" },
+    { "type": "product", "id": "feat_2", "label": "Featured 2" },
+    { "type": "product", "id": "feat_3", "label": "Featured 3" }
+  ],
+  "presets": [{ "name": "Halora header" }]
+}
+{% endschema %}

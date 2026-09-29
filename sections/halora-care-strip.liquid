@@ -1,0 +1,44 @@
+<section class="halora-care color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <div class="halora-care__grid">
+      {%- for block in section.blocks -%}
+        <div class="halora-care__item" {{ block.shopify_attributes }}>
+          <div class="halora-care__mark"></div>
+          {%- if block.settings.heading != blank -%}<h5 class="halora-care__h">{{ block.settings.heading }}</h5>{%- endif -%}
+          {%- if block.settings.body != blank -%}<p class="halora-care__body">{{ block.settings.body }}</p>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora care strip",
+  "tag": "section",
+  "class": "section-halora-care",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "blocks": [
+    {
+      "type": "trust",
+      "name": "Trust point",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Delivery across Pakistan" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Hand-packed in Lahore. Free over PKR 5,000." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Halora care strip",
+    "blocks": [
+      { "type": "trust", "settings": { "heading": "Delivery across Pakistan", "body": "Hand-packed in Lahore. Free over PKR 5,000." } },
+      { "type": "trust", "settings": { "heading": "Nation Wide Delivery", "body": "Within 3-5 Working Days." } },
+      { "type": "trust", "settings": { "heading": "Seven-day Returns", "body": "Unopened pieces, no questions. Damages replaced." } },
+      { "type": "trust", "settings": { "heading": "Hand-blended In-House", "body": "Made in small batches. One pair of hands." } }
+    ]
+  }]
+}
+{% endschema %}

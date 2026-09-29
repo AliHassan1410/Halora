@@ -1,0 +1,22 @@
+{%- comment -%}
+  HALORA — Floating WhatsApp button.
+  Sits fixed bottom-right on every page. Tap opens WhatsApp with the
+  number pre-filled and an optional intro message.
+
+  Number: +92 327 8804400 (Pakistan · sole founder inbox)
+  wa.me format uses digits-only, no plus sign.
+{%- endcomment -%}
+
+<a
+  href="https://wa.me/923278804400?text=Hi%20HALORA%20%E2%80%94%20"
+  class="halora-wa-float"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Message HALORA on WhatsApp"
+>
+  <svg class="halora-wa-float__icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path fill="currentColor" d="M16.003 3C9.377 3 4 8.377 4 15.003c0 2.36.686 4.56 1.867 6.415L4 29l7.83-1.83A11.94 11.94 0 0 0 16.003 27C22.63 27 28 21.63 28 15.003 28 8.377 22.63 3 16.003 3zm0 21.804a9.79 9.79 0 0 1-4.99-1.363l-.358-.213-4.646 1.086 1.11-4.526-.234-.372a9.79 9.79 0 0 1-1.5-5.213c0-5.412 4.402-9.814 9.818-9.814 2.621 0 5.086 1.02 6.94 2.878a9.72 9.72 0 0 1 2.878 6.938c0 5.412-4.406 9.799-9.818 9.799zm5.375-7.334c-.294-.147-1.74-.858-2.01-.955-.27-.098-.466-.147-.663.147-.196.294-.759.955-.931 1.15-.172.196-.343.221-.638.074-.294-.147-1.243-.458-2.367-1.46-.874-.78-1.464-1.744-1.635-2.038-.172-.294-.019-.453.128-.6.132-.132.294-.343.44-.515.148-.172.196-.294.295-.49.098-.196.05-.368-.024-.515-.074-.147-.663-1.6-.908-2.19-.24-.575-.484-.497-.663-.507-.171-.008-.367-.01-.564-.01a1.083 1.083 0 0 0-.785.368c-.27.294-1.03 1.007-1.03 2.455 0 1.448 1.054 2.847 1.201 3.043.147.196 2.076 3.171 5.033 4.446.703.303 1.253.484 1.681.62.706.225 1.348.194 1.855.118.567-.085 1.74-.712 1.987-1.4.245-.687.245-1.276.171-1.4-.073-.123-.269-.196-.564-.343z"/>
+  </svg>
+  <span class="halora-wa-float__label">Message us</span>
+  <span class="halora-wa-float__pulse" aria-hidden="true"></span>
+</a>

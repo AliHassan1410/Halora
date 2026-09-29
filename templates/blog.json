@@ -1,0 +1,48 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "<p>The <em>Journal.</em></p>",
+        "subheading": "Short reads on ritual, mineral, and the small ceremonies we keep. New notes monthly."
+      }
+    },
+    "journal": {
+      "type": "halora-journal",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "kicker": "",
+        "heading": "",
+        "subheading": "",
+        "blog": "journal"
+      },
+      "blocks": {
+        "j1": { "type": "entry", "settings": { "meta": "Origin · 6 min read", "heading": "<p>What the Salt <em>Range remembers.</em></p>", "body": "A short field note from Khewra — the world's oldest pink salt mine, and what 250 million years feels like under your hand." } },
+        "j2": { "type": "entry", "settings": { "meta": "Ritual · 4 min read", "heading": "<p>The five-minute <em>guasha practice.</em></p>", "body": "A morning stroke sequence with the salt tool. Where to start, where to draw, when to stop." } },
+        "j3": { "type": "entry", "settings": { "meta": "House · 5 min read", "heading": "<p>Why we chose <em>no gold.</em></p>", "body": "The brand book has one strict line about hardware. The reason is older than the brand." } }
+      },
+      "block_order": ["j1","j2","j3"]
+    },
+    "newsletter": {
+      "type": "halora-newsletter",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "<p>Have the next note <em>arrive quietly.</em></p>",
+        "body": "Subscribe to the journal — new pieces, small openings, a recipe or a ritual when there is one to share.",
+        "cta_label": "Join",
+        "disclaimer": "A quiet letter, monthly. Unsubscribe whenever."
+      }
+    }
+  },
+  "order": ["subhero","journal","newsletter"]
+}

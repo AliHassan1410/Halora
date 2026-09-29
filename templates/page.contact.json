@@ -1,0 +1,45 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "<p>Write to <em>us.</em></p>",
+        "subheading": "Every message is read by the same pair of hands that mixed your scrub. We reply within two working days."
+      }
+    },
+    "contact": {
+      "type": "halora-contact",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "email": "haloraliving@gmail.com",
+        "studio_label": "Lahore, Pakistan",
+        "studio_note": "By appointment only",
+        "hours_heading": "Reply hours",
+        "hours_weekday": "10:00 — 19:00 PKT",
+        "hours_sunday": "Closed"
+      }
+    },
+    "care": {
+      "type": "halora-care-strip",
+      "settings": { "color_scheme": "scheme-1" },
+      "blocks": {
+        "c1": { "type": "trust", "settings": { "heading": "Delivery across Pakistan", "body": "Hand-packed in Lahore." } },
+        "c2": { "type": "trust", "settings": { "heading": "Nation Wide Delivery", "body": "Within 3-5 Working Days." } },
+        "c3": { "type": "trust", "settings": { "heading": "Seven-day Returns", "body": "Unopened pieces, no questions." } },
+        "c4": { "type": "trust", "settings": { "heading": "Hand-blended In-House", "body": "Made in small batches." } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    }
+  },
+  "order": ["subhero","contact","care"]
+}

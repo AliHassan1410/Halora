@@ -1,0 +1,81 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "main": {
+      "type": "halora-rich-text",
+      "blocks": {
+        "content": {
+          "type": "pagecontent",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "halora_care_strip": {
+      "type": "halora-care-strip",
+      "blocks": {
+        "c1": {
+          "type": "trust",
+          "settings": {
+            "heading": "Delivery across Pakistan",
+            "body": "Hand-packed in Lahore. Free over PKR 5,000."
+          }
+        },
+        "c2": {
+          "type": "trust",
+          "settings": {
+            "heading": "Nation Wide Delivery",
+            "body": "Within 3-5 Working Days."
+          }
+        },
+        "c3": {
+          "type": "trust",
+          "settings": {
+            "heading": "Seven-day Returns",
+            "body": "Unopened pieces, no questions. Damages replaced."
+          }
+        },
+        "c4": {
+          "type": "trust",
+          "settings": {
+            "heading": "Hand-blended In-House",
+            "body": "Made in small batches. One pair of hands."
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "subhero",
+    "main",
+    "halora_care_strip"
+  ]
+}

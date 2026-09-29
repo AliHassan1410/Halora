@@ -1,0 +1,86 @@
+
+<section class="halora-ritual-teaser color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <header class="halora-section-head">
+      {%- if section.settings.kicker != blank -%}<p class="halora-kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+      <hr class="halora-rule">
+      {%- if section.settings.heading != blank -%}<h2 class="halora-section-head__h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p class="halora-section-head__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    </header>
+    <div class="halora-ritual-teaser__grid">
+      {%- for block in section.blocks -%}
+        <a class="halora-ritual-card{% if block.settings.image != blank %} halora-ritual-card--has-image{% endif %}" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
+          <div class="halora-ritual-card__media halora-bg--{{ block.settings.tone }}">
+            {%- if block.settings.image != blank -%}
+              <img
+                class="halora-ritual-card__img"
+                src="{{ block.settings.image | image_url: width: 900 }}"
+                srcset="{{ block.settings.image | image_url: width: 450 }} 450w, {{ block.settings.image | image_url: width: 900 }} 900w, {{ block.settings.image | image_url: width: 1400 }} 1400w"
+                sizes="(min-width: 990px) 33vw, 100vw"
+                alt="{{ block.settings.image.alt | escape | default: block.settings.heading | strip_html }}"
+                loading="lazy"
+                width="900"
+                height="{{ 900 | divided_by: block.settings.image.aspect_ratio }}">
+            {%- endif -%}
+            <span class="halora-ritual-card__tag">{{ block.settings.tag_label }}</span>
+          </div>
+          {%- if block.settings.heading != blank -%}<h3 class="halora-ritual-card__h">{{ block.settings.heading }}</h3>{%- endif -%}
+          {%- if block.settings.body != blank -%}<p class="halora-ritual-card__body">{{ block.settings.body }}</p>{%- endif -%}
+          {%- if block.settings.price_label != blank -%}
+            <p class="halora-ritual-card__price">
+              <span class="halora-ritual-card__price-now">{{ block.settings.price_label }}</span>
+              {%- if block.settings.was_label != blank -%}<span class="halora-ritual-card__price-was">{{ block.settings.was_label }}</span>{%- endif -%}
+              {%- if block.settings.save_label != blank -%}<span class="halora-ritual-card__price-save">{{ block.settings.save_label }}</span>{%- endif -%}
+            </p>
+          {%- endif -%}
+          <span class="halora-ritual-card__arrow">View the set →</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora ritual sets teaser",
+  "tag": "section",
+  "class": "section-halora-ritual-teaser",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The Ritual Sets" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>For the practice, <em>not the moment.</em></p>" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Three sets built around how the day actually moves — morning, evening, and the in-between." }
+  ],
+  "blocks": [
+    {
+      "type": "ritual",
+      "name": "Ritual set card",
+      "settings": [
+        { "type": "select", "id": "tone", "label": "Tone (fallback if no image)", "default": "dawn", "options": [
+          { "value": "dawn", "label": "Dawn pink" },
+          { "value": "sage", "label": "Sage" },
+          { "value": "dove", "label": "Dove" },
+          { "value": "eggshell", "label": "Eggshell" }
+        ] },
+        { "type": "image_picker", "id": "image", "label": "Ritual set image (5:4 landscape)" },
+        { "type": "text", "id": "tag_label", "label": "Tag", "default": "Ritual Set 01" },
+        { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>The <em>Morning</em> Set</p>" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "A clean wake-up for the skin and the senses." },
+        { "type": "text", "id": "price_label", "label": "Price label", "default": "PKR 3,800" },
+        { "type": "text", "id": "was_label", "label": "Compare-at label", "default": "PKR 4,250" },
+        { "type": "text", "id": "save_label", "label": "Save label", "default": "Save 10%" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{
+    "name": "Halora ritual sets teaser",
+    "blocks": [
+      { "type": "ritual", "settings": { "tone": "eggshell", "tag_label": "Ritual Set 01", "heading": "<p>The <em>Morning</em> Set</p>", "body": "A clean wake-up for the skin and the senses." } },
+      { "type": "ritual", "settings": { "tone": "dawn", "tag_label": "Ritual Set 02", "heading": "<p>The <em>Sanctuary</em> Box</p>", "body": "For slower evenings. The scrub, the warm pillow, the soft amber glow." } },
+      { "type": "ritual", "settings": { "tone": "dove", "tag_label": "Ritual Set 03", "heading": "<p>The <em>Gifting</em> Edit</p>", "body": "A piece from each of the four houses, wrapped in eggshell linen." } }
+    ]
+  }]
+}
+{% endschema %}

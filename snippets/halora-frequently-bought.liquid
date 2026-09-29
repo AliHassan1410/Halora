@@ -1,0 +1,185 @@
+{%- comment -%}
+  HALORA — Frequently-bought carousel.
+  Renders 4 products: 2 from the same house as the context, 2 from
+  different houses. Horizontal scroll on mobile; 4-col grid on desktop.
+
+  Params:
+    current_product   — Product object (excluded from picks). Optional.
+    context_collection — Collection handle string. Optional; if omitted
+                        we derive from current_product's first house.
+    heading           — Section heading. Optional; defaults below.
+{%- endcomment -%}
+
+{%- liquid
+  assign house_slugs = 'skincare,therapy,light,kitchen' | split: ','
+
+  # Determine "same" house
+  assign same_handle = context_collection
+  if same_handle == blank and current_product != blank
+    for coll in current_product.collections
+      if house_slugs contains coll.handle
+        assign same_handle = coll.handle
+        break
+      endif
+    endfor
+  endif
+  if same_handle == blank
+    assign same_handle = 'skincare'
+  endif
+
+  assign exclude_handle = ''
+  if current_product != blank
+    assign exclude_handle = current_product.handle
+  endif
+
+  # Pick 2 from same house
+  assign picked_handles = ''
+  assign same_count = 0
+  for p in collections[same_handle].products limit: 8
+    if p.handle == exclude_handle
+      continue
+    endif
+    if same_count >= 2
+      break
+    endif
+    assign picked_handles = picked_handles | append: p.handle | append: '|'
+    assign same_count = same_count | plus: 1
+  endfor
+
+  # Pick 1 product from one other house — total picks land at 3
+  assign other_count = 0
+  for slug in house_slugs
+    if slug == same_handle
+      continue
+    endif
+    if other_count >= 1
+      break
+    endif
+    for p in collections[slug].products limit: 4
+      if p.handle == exclude_handle
+        continue
+      endif
+      if picked_handles contains p.handle
+        continue
+      endif
+      assign picked_handles = picked_handles | append: p.handle | append: '|'
+      assign other_count = other_count | plus: 1
+      break
+    endfor
+  endfor
+
+  assign picked_array = picked_handles | split: '|'
+-%}
+
+{%- if picked_array.size > 0 -%}
+<section class="halora-freq{% if compact %} halora-freq--compact{% endif %}">
+  <div class="halora-freq__wrap {% unless compact %}page-width{% endunless %}">
+    <h3 class="halora-freq__h">{{ heading | default: 'Frequently bought together.' }}</h3>
+    <div class="halora-freq__scroller">
+      <div class="halora-freq__grid">
+        {%- for handle_str in picked_array -%}
+          {%- assign h = handle_str | strip -%}
+          {%- if h != blank -%}
+            {%- assign p = all_products[h] -%}
+            {%- if p and p.handle != blank -%}
+              {%- assign fb_variant = p.selected_or_first_available_variant -%}
+              <div class="halora-freq__card">
+                <a class="halora-freq__link" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+                  <div class="halora-freq__media">
+                    {%- if p.featured_image -%}
+                      <img src="{{ p.featured_image | image_url: width: 360 }}"
+                        srcset="{{ p.featured_image | image_url: width: 200 }} 200w, {{ p.featured_image | image_url: width: 400 }} 400w"
+                        sizes="(min-width: 990px) 240px, 45vw"
+                        alt="{{ p.title | escape }}"
+                        loading="lazy" width="240" height="300">
+                    {%- else -%}
+                      <div class="halora-freq__ph"></div>
+                    {%- endif -%}
+                  </div>
+                  <p class="halora-freq__name">{{ p.title }}</p>
+                  <p class="halora-freq__price">PKR&nbsp;{{ p.price | money_without_currency | replace: '.00', '' }}</p>
+                </a>
+                {%- if fb_variant and fb_variant.available -%}
+                  <button
+                    type="button"
+                    class="halora-freq__add"
+                    data-halora-freq-add
+                    data-variant-id="{{ fb_variant.id }}"
+                    aria-label="Add {{ p.title | escape }} to cart">
+                    <span class="halora-freq__add-label">+ Add</span>
+                    <span class="halora-freq__add-spinner" aria-hidden="true"></span>
+                  </button>
+                {%- else -%}
+                  <span class="halora-freq__oos">Sold out</span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.__haloraFreqAddBound) return;
+    window.__haloraFreqAddBound = true;
+
+    document.addEventListener('click', function (evt) {
+      var btn = evt.target.closest('[data-halora-freq-add]');
+      if (!btn) return;
+      evt.preventDefault();
+      if (btn.classList.contains('is-loading') || btn.classList.contains('is-done')) return;
+
+      var variantId = btn.getAttribute('data-variant-id');
+      if (!variantId) return;
+
+      var drawer = document.querySelector('cart-drawer');
+      var sections = ['cart-drawer', 'cart-icon-bubble'];
+      var body = {
+        items: [{ id: Number(variantId), quantity: 1 }],
+        sections: sections.join(','),
+        sections_url: window.location.pathname
+      };
+
+      btn.classList.add('is-loading');
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/javascript' },
+        body: JSON.stringify(body)
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.status) {
+            // Shopify error object
+            btn.classList.remove('is-loading');
+            btn.classList.add('is-error');
+            setTimeout(function () { btn.classList.remove('is-error'); }, 1400);
+            return;
+          }
+          if (drawer && typeof drawer.renderContents === 'function' && data.sections) {
+            drawer.renderContents(data);
+          } else if (drawer && typeof drawer.open === 'function') {
+            drawer.open();
+          }
+          btn.classList.remove('is-loading');
+          btn.classList.add('is-done');
+          var lbl = btn.querySelector('.halora-freq__add-label');
+          var original = lbl ? lbl.textContent : '';
+          if (lbl) lbl.textContent = '✓ Added';
+          setTimeout(function () {
+            btn.classList.remove('is-done');
+            if (lbl) lbl.textContent = original || '+ Add';
+          }, 1600);
+        })
+        .catch(function () {
+          btn.classList.remove('is-loading');
+          btn.classList.add('is-error');
+          setTimeout(function () { btn.classList.remove('is-error'); }, 1400);
+        });
+    });
+  }());
+</script>
+{%- endif -%}

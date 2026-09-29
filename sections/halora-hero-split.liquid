@@ -1,0 +1,260 @@
+{%- liquid
+  assign slides = section.blocks | where: "type", "slide"
+-%}
+
+<section class="halora-hero-split color-{{ section.settings.color_scheme }}">
+  <div class="halora-hero-split__copy">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="halora-kicker halora-hero-split__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="halora-hero-split__heading">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.lede != blank -%}
+      <p class="halora-hero-split__lede">{{ section.settings.lede }}</p>
+    {%- endif -%}
+    {%- if section.settings.primary_label != blank or section.settings.secondary_label != blank -%}
+      <div class="halora-hero-split__ctas">
+        {%- if section.settings.primary_label != blank -%}
+          <a href="{{ section.settings.primary_url | default: routes.collections_url }}" class="halora-btn">{{ section.settings.primary_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.secondary_label != blank -%}
+          <a href="{{ section.settings.secondary_url | default: '/pages/rituals' }}" class="halora-btn halora-btn--ghost">{{ section.settings.secondary_label }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_meta -%}
+      <div class="halora-hero-split__meta">
+        <div>
+          <p class="halora-hero-split__meta-k">{{ section.settings.meta1_k | default: 'Source' }}</p>
+          <p class="halora-hero-split__meta-v">{{ section.settings.meta1_v }}</p>
+        </div>
+        <div>
+          <p class="halora-hero-split__meta-k">{{ section.settings.meta2_k | default: 'Blended' }}</p>
+          <p class="halora-hero-split__meta-v">{{ section.settings.meta2_v }}</p>
+        </div>
+        <div>
+          <p class="halora-hero-split__meta-k">{{ section.settings.meta3_k | default: 'Houses' }}</p>
+          <p class="halora-hero-split__meta-v">{{ section.settings.meta3_v }}</p>
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+
+  <div class="halora-hero-split__stage">
+    <div class="halora-hero-stage__featured" data-halora-carousel data-interval="{{ section.settings.interval | default: 3500 }}">
+      <div class="halora-hero-stage__tag"><span class="halora-hero-stage__pulse"></span><span data-hero-label>{{ section.settings.tag_default | default: 'Now Shipping' }}</span></div>
+      {%- for block in slides -%}
+        {%- assign p = all_products[block.settings.product] -%}
+        {%- assign v = p.selected_or_first_available_variant -%}
+        <div class="halora-hero-slide{% if forloop.first %} active{% endif %}"
+             data-house="{{ p.collections.first.title | default: 'HALORA' }}"
+             data-name="{{ p.title | default: block.settings.fallback_name }}"
+             data-price="PKR {{ p.price | money_without_currency | default: block.settings.fallback_price }}"
+             data-label="{{ block.settings.label | default: 'Featured' }}"
+             data-variant-id="{{ v.id }}"
+             data-available="{% if v and v.available %}1{% else %}0{% endif %}"
+             data-product-url="{{ p.url | default: '#' }}">
+          <a class="halora-hero-slide__link" href="{{ p.url | default: '#' }}" aria-label="View {{ p.title | escape }}">
+            {%- if p != blank and p.featured_image != blank and p.featured_image.src != blank -%}
+              <img src="{{ p.featured_image | image_url: width: 700 }}"
+                   {%- comment -%}
+                     Measured on a 375px / DPR-2 phone: renders 228 CSS px, so it
+                     needs 456 device px. With only 350/700 offered the browser
+                     jumped to 700w. 500w fits DPR 2, 1000w covers DPR 3.
+                   {%- endcomment -%}
+                   srcset="{{ p.featured_image | image_url: width: 350 }} 350w, {{ p.featured_image | image_url: width: 500 }} 500w, {{ p.featured_image | image_url: width: 700 }} 700w, {{ p.featured_image | image_url: width: 1000 }} 1000w"
+                   sizes="(min-width: 990px) 40vw, 70vw"
+                   alt="{{ p.title | escape }}"
+                   width="700"
+                   height="{{ 700 | divided_by: p.featured_image.aspect_ratio }}"
+                   loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+            {%- else -%}
+              <div class="halora-hero-slide__placeholder"></div>
+            {%- endif -%}
+          </a>
+        </div>
+      {%- endfor -%}
+
+      <button class="halora-hero-arrow halora-hero-arrow--prev" data-hero-prev type="button" aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <button class="halora-hero-arrow halora-hero-arrow--next" data-hero-next type="button" aria-label="Next slide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+
+      <div class="halora-hero-stage__info">
+        <div>
+          <p class="halora-hero-stage__house" data-hero-house>—</p>
+          <a class="halora-hero-stage__name" data-hero-name href="#">—</a>
+        </div>
+        <div class="halora-hero-stage__buy">
+          <p class="halora-hero-stage__price" data-hero-price>—</p>
+          <button class="halora-hero-buy" type="button" data-hero-buy>
+            <span class="halora-hero-buy__label">Buy Now</span>
+            <span class="halora-hero-buy__spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="halora-hero-dots">
+        {%- for block in slides -%}
+          <button class="halora-hero-dot{% if forloop.first %} active{% endif %}" data-dot="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var stage = document.currentScript.previousElementSibling.querySelector('[data-halora-carousel]');
+  if (!stage) return;
+  var slides = stage.querySelectorAll('.halora-hero-slide');
+  var dots = stage.querySelectorAll('.halora-hero-dot');
+  var houseEl = stage.querySelector('[data-hero-house]');
+  var nameEl = stage.querySelector('[data-hero-name]');
+  var priceEl = stage.querySelector('[data-hero-price]');
+  var labelEl = stage.querySelector('[data-hero-label]');
+  var buyBtn = stage.querySelector('[data-hero-buy]');
+  var prevBtn = stage.querySelector('[data-hero-prev]');
+  var nextBtn = stage.querySelector('[data-hero-next]');
+  var cur = 0;
+  var interval = parseInt(stage.dataset.interval, 10) || 2000;
+  if (!slides.length) return;
+
+  function show(i){
+    slides[cur].classList.remove('active');
+    dots[cur] && dots[cur].classList.remove('active');
+    cur = (i + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    dots[cur] && dots[cur].classList.add('active');
+    var s = slides[cur];
+    if (houseEl) houseEl.textContent = s.dataset.house;
+    if (nameEl) {
+      nameEl.innerHTML = s.dataset.name;
+      // Keep the info-bar product name linked to whichever slide is active
+      if (s.dataset.productUrl) nameEl.setAttribute('href', s.dataset.productUrl);
+    }
+    if (priceEl) priceEl.textContent = s.dataset.price;
+    if (labelEl) labelEl.textContent = s.dataset.label;
+    if (buyBtn) {
+      var available = s.dataset.available === '1' && s.dataset.variantId;
+      buyBtn.disabled = !available;
+      buyBtn.classList.toggle('is-disabled', !available);
+      var lbl = buyBtn.querySelector('.halora-hero-buy__label');
+      if (lbl) lbl.textContent = available ? 'Buy Now' : 'Sold out';
+    }
+  }
+  show(0);
+
+  var timer = setInterval(function(){ show(cur + 1); }, interval);
+  function restart(){ clearInterval(timer); timer = setInterval(function(){ show(cur + 1); }, interval); }
+
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){ show(parseInt(d.dataset.dot, 10)); restart(); });
+  });
+  prevBtn && prevBtn.addEventListener('click', function(){ show(cur - 1); restart(); });
+  nextBtn && nextBtn.addEventListener('click', function(){ show(cur + 1); restart(); });
+
+  // Pause on hover so users get a chance to look at what caught their eye
+  stage.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  stage.addEventListener('mouseleave', restart);
+
+  // Buy Now → AJAX add + open cart drawer
+  buyBtn && buyBtn.addEventListener('click', function(){
+    if (buyBtn.disabled) return;
+    var s = slides[cur];
+    var variantId = s.dataset.variantId;
+    if (!variantId) return;
+    buyBtn.classList.add('is-loading');
+    var drawer = document.querySelector('cart-drawer');
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/javascript' },
+      body: JSON.stringify({
+        items: [{ id: Number(variantId), quantity: 1 }],
+        sections: 'cart-drawer,cart-icon-bubble',
+        sections_url: window.location.pathname
+      })
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        buyBtn.classList.remove('is-loading');
+        if (data.status) { buyBtn.classList.add('is-error'); setTimeout(function(){ buyBtn.classList.remove('is-error'); }, 1400); return; }
+        if (drawer && typeof drawer.renderContents === 'function' && data.sections) drawer.renderContents(data);
+        else if (drawer && typeof drawer.open === 'function') drawer.open();
+      })
+      .catch(function(){
+        buyBtn.classList.remove('is-loading');
+        buyBtn.classList.add('is-error');
+        setTimeout(function(){ buyBtn.classList.remove('is-error'); }, 1400);
+      });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Halora hero (split)",
+  "tag": "section",
+  "class": "section-halora-hero-split",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "A Pakistani Mineral Wellness Apothecary" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>The salt of <em>small ceremonies.</em></p>" },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Drawn from the Salt Range — the oldest mineral deposit on earth — and hand-blended for the small rituals that anchor better living." },
+    { "type": "header", "content": "CTAs" },
+    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "Shop the Apothecary" },
+    { "type": "url", "id": "primary_url", "label": "Primary URL" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button", "default": "Ritual Sets" },
+    { "type": "url", "id": "secondary_url", "label": "Secondary URL" },
+    { "type": "header", "content": "Meta row (under CTAs)" },
+    { "type": "checkbox", "id": "show_meta", "label": "Show meta row", "default": true },
+    { "type": "text", "id": "meta1_k", "label": "Meta 1 label", "default": "Source" },
+    { "type": "richtext", "id": "meta1_v", "label": "Meta 1 value", "default": "<p>Khewra, <em>Pakistan</em></p>" },
+    { "type": "text", "id": "meta2_k", "label": "Meta 2 label", "default": "Blended" },
+    { "type": "richtext", "id": "meta2_v", "label": "Meta 2 value", "default": "<p>In <em>Lahore</em></p>" },
+    { "type": "text", "id": "meta3_k", "label": "Meta 3 label", "default": "Houses" },
+    { "type": "richtext", "id": "meta3_v", "label": "Meta 3 value", "default": "<p><em>Four</em></p>" },
+    { "type": "header", "content": "Stats row (mineral facts)" },
+    { "type": "checkbox", "id": "show_stats", "label": "Show stats row", "default": true },
+    { "type": "richtext", "id": "stat1_v", "label": "Stat 1 figure", "default": "<p>250<em>M</em></p>" },
+    { "type": "text", "id": "stat1_k", "label": "Stat 1 label", "default": "Years of mineral" },
+    { "type": "richtext", "id": "stat2_v", "label": "Stat 2 figure", "default": "<p>84</p>" },
+    { "type": "text", "id": "stat2_k", "label": "Stat 2 label", "default": "Trace minerals" },
+    { "type": "richtext", "id": "stat3_v", "label": "Stat 3 figure", "default": "<p>19</p>" },
+    { "type": "text", "id": "stat3_k", "label": "Stat 3 label", "default": "Hand-blended pieces" },
+    { "type": "richtext", "id": "stat4_v", "label": "Stat 4 figure", "default": "<p>1</p>" },
+    { "type": "text", "id": "stat4_k", "label": "Stat 4 label", "default": "Pair of hands" },
+    { "type": "header", "content": "Carousel" },
+    { "type": "text", "id": "tag_default", "label": "Pulse tag", "default": "Now Shipping" },
+    { "type": "range", "id": "interval", "label": "Rotation (ms)", "min": 1500, "max": 8000, "step": 500, "default": 2000 }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Product slide",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "label", "label": "Top-left label", "default": "House Favourite" },
+        { "type": "text", "id": "fallback_name", "label": "Fallback name (if no product picked)" },
+        { "type": "text", "id": "fallback_price", "label": "Fallback price" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{
+    "name": "Halora hero (split)",
+    "blocks": [
+      { "type": "slide", "settings": { "label": "House 01" } },
+      { "type": "slide", "settings": { "label": "House 02" } },
+      { "type": "slide", "settings": { "label": "House 03" } },
+      { "type": "slide", "settings": { "label": "House 04" } },
+      { "type": "slide", "settings": { "label": "Best Seller" } }
+    ]
+  }]
+}
+{% endschema %}

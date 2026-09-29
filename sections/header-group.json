@@ -1,0 +1,104 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "halora-announcement": {
+      "type": "halora-announcement",
+      "blocks": {
+        "m1": {
+          "type": "msg",
+          "settings": {
+            "text": "Delivery across Pakistan"
+          }
+        },
+        "m2": {
+          "type": "msg",
+          "settings": {
+            "text": "200+ Trusted Customers"
+          }
+        },
+        "m3": {
+          "type": "msg",
+          "settings": {
+            "text": "Hand-blended in Lahore"
+          }
+        },
+        "m4": {
+          "type": "msg",
+          "settings": {
+            "text": "Drawn from the Salt Range"
+          }
+        },
+        "m5": {
+          "type": "msg",
+          "settings": {
+            "text": "Free shipping over PKR 5,000"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5"
+      ],
+      "settings": {
+        "color_scheme": "scheme-4"
+      }
+    },
+    "halora-utility-bar": {
+      "type": "halora-utility-bar",
+      "blocks": {
+        "u1": {
+          "type": "link",
+          "settings": {
+            "label": "EN · PKR",
+            "url": ""
+          }
+        },
+        "u3": {
+          "type": "link",
+          "settings": {
+            "label": "Care guide",
+            "url": "/pages/care-guide"
+          }
+        }
+      },
+      "block_order": [
+        "u1",
+        "u3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "halora-header": {
+      "type": "halora-header",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "menu": "main-menu",
+        "tagline": "Mineral Wellness · Choose Yourself",
+        "sticky": true,
+        "feat_heading": "House favourites",
+        "feat_1": "",
+        "feat_2": "",
+        "feat_3": ""
+      }
+    }
+  },
+  "order": [
+    "halora-announcement",
+    "halora-utility-bar",
+    "halora-header"
+  ]
+}

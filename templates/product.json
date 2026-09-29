@@ -1,0 +1,53 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-halora-product",
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "From the same house",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "halora_care_strip": {
+      "type": "halora-care-strip",
+      "settings": { "color_scheme": "scheme-1" },
+      "blocks": {
+        "c1": { "type": "trust", "settings": { "heading": "Delivery across Pakistan", "body": "Hand-packed in Lahore. Free over PKR 5,000." } },
+        "c2": { "type": "trust", "settings": { "heading": "Nation Wide Delivery", "body": "Within 3-5 Working Days." } },
+        "c3": { "type": "trust", "settings": { "heading": "Seven-day Returns", "body": "Unopened pieces, no questions. Damages replaced." } },
+        "c4": { "type": "trust", "settings": { "heading": "Hand-blended In-House", "body": "Made in small batches. One pair of hands." } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    }
+  },
+  "order": [
+    "main",
+    "related-products",
+    "halora_care_strip"
+  ]
+}

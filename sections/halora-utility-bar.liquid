@@ -1,0 +1,47 @@
+
+<div class="halora-utility color-{{ section.settings.color_scheme }}" role="region" aria-label="Site utility bar">
+  <div class="halora-utility__inner page-width">
+    <ul class="halora-utility__group halora-utility__group--left" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'link' -%}
+          <li {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.url }}" class="halora-utility__link">{{ block.settings.label }}</a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+    <ul class="halora-utility__group halora-utility__group--right" role="list">
+      <li><a href="{{ routes.account_url }}" class="halora-utility__link">{{ 'customer.account_fallback' | t | default: 'Account' }}</a></li>
+      <li><a href="{{ routes.search_url }}" class="halora-utility__link">Search</a></li>
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Halora utility bar",
+  "tag": "section",
+  "class": "section-halora-utility",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Utility link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Care guide" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Halora utility bar",
+    "blocks": [
+      { "type": "link", "settings": { "label": "EN · PKR" } },
+      { "type": "link", "settings": { "label": "Care guide", "url": "/pages/care-guide" } }
+    ]
+  }]
+}
+{% endschema %}

@@ -1,0 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "halora-footer": {
+      "type": "halora-footer",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "tagline": "Mineral Wellness · Choose Yourself",
+        "about": "A Pakistani apothecary built around pink Himalayan salt — drawn from the Salt Range, hand-blended in small batches.",
+        "instagram": "https://instagram.com/halora.living"
+      },
+      "blocks": {
+        "c1": { "type": "menu_col", "settings": { "heading": "The Houses", "menu": "main-menu" } },
+        "c2": { "type": "menu_col", "settings": { "heading": "The House", "menu": "footer" } },
+        "c3": { "type": "menu_col", "settings": { "heading": "Care", "menu": "footer-care" } }
+      },
+      "block_order": ["c1","c2","c3"]
+    }
+  },
+  "order": ["halora-footer"]
+}

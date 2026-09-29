@@ -1,0 +1,137 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_crumbs": false,
+        "crumb_current": "",
+        "parent_label": "",
+        "parent_url": "",
+        "heading": "<p>Asked and <em>answered.</em></p>",
+        "subheading": "If your question isn't here, write to us. Every email is read by the founder — we reply within two working days."
+      }
+    },
+    "faq": {
+      "type": "halora-faq",
+      "blocks": {
+        "q1": {
+          "type": "qa",
+          "settings": {
+            "question": "Where do you ship — and how long does it take?",
+            "answer": "<p>Across Pakistan only at launch. Lahore and Karachi: 1–3 working days. Other cities: 3–5 working days via Leopards Courier. International shipping opens soon.</p>"
+          }
+        },
+        "q2": {
+          "type": "qa",
+          "settings": {
+            "question": "Is shipping free?",
+            "answer": "<p>Free shipping on orders over PKR 5,000. Orders under that carry a PKR 300 COD handling fee, added at delivery.</p>"
+          }
+        },
+        "q3": {
+          "type": "qa",
+          "settings": {
+            "question": "Can I track my order?",
+            "answer": "<p>Yes. You'll receive a tracking link by email and SMS the moment the parcel leaves the studio.</p>"
+          }
+        },
+        "q4": {
+          "type": "qa",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>Cash on Delivery (nationwide). Bank transfer and card payment coming soon.</p>"
+          }
+        },
+        "q5": {
+          "type": "qa",
+          "settings": {
+            "question": "Is COD really available everywhere?",
+            "answer": "<p>Yes — any address that accepts parcels. A small COD handling fee (PKR 300) is added at checkout; this goes to the courier, not us.</p>"
+          }
+        },
+        "q6": {
+          "type": "qa",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>Unopened pieces can be returned within seven days. Damages are always replaced. Opened consumables (soaps, scrubs, bath crystals) are not returnable for hygiene reasons.</p>"
+          }
+        },
+        "q7": {
+          "type": "qa",
+          "settings": {
+            "question": "My salt lamp arrived chipped — what now?",
+            "answer": "<p>Photograph the damage and the box, email <a href=\"mailto:haloraliving@gmail.com\">haloraliving@gmail.com</a>, and we'll send a replacement at no cost.</p>"
+          }
+        },
+        "q8": {
+          "type": "qa",
+          "settings": {
+            "question": "Is the salt actually from Pakistan?",
+            "answer": "<p>Yes. Every gram is drawn from the Khewra mine in Pakistan's Salt Range — the world's oldest and second-largest pink salt deposit. We do not import.</p>"
+          }
+        },
+        "q9": {
+          "type": "qa",
+          "settings": {
+            "question": "Are the products safe for sensitive skin?",
+            "answer": "<p>Our formulations contain no synthetic fragrance, parabens, or SLS. We recommend patch-testing scrubs on the inner arm before the first full use.</p>"
+          }
+        },
+        "q10": {
+          "type": "qa",
+          "settings": {
+            "question": "How do I care for a salt lamp or salt plate?",
+            "answer": "<p>Wipe with a dry cloth. Never submerge in water — salt dissolves. For lamps, keep the bulb on at night; the warmth keeps the salt dry. Full instructions on the <a href=\"/pages/care-guide\">care guide</a>.</p>"
+          }
+        },
+        "q11": {
+          "type": "qa",
+          "settings": {
+            "question": "Do you offer wholesale?",
+            "answer": "<p>Not at launch. We will revisit wholesale soon. Until then, please write to <a href=\"mailto:haloraliving@gmail.com\">haloraliving@gmail.com</a> with your store details.</p>"
+          }
+        },
+        "q12": {
+          "type": "qa",
+          "settings": {
+            "question": "I'd like to feature HALORA.",
+            "answer": "<p>Please write to <a href=\"mailto:haloraliving@gmail.com\">haloraliving@gmail.com</a> with the publication, deadline, and angle. We'll send images and answer questions.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11",
+        "q12"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "kicker": "Questions",
+        "heading": "<p>The full list.</p>"
+      }
+    }
+  },
+  "order": [
+    "subhero",
+    "faq"
+  ]
+}

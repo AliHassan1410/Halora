@@ -1,0 +1,48 @@
+
+<section class="halora-hero color-{{ section.settings.color_scheme }}" aria-label="{{ section.settings.eyebrow | escape }}">
+  <div class="halora-hero__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="halora-kicker halora-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="halora-hero__heading">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.lede != blank -%}
+      <p class="halora-hero__lede">{{ section.settings.lede }}</p>
+    {%- endif -%}
+    {%- if section.settings.primary_label != blank or section.settings.secondary_label != blank -%}
+      <div class="halora-hero__ctas">
+        {%- if section.settings.primary_label != blank -%}
+          <a href="{{ section.settings.primary_url }}" class="button button--primary halora-btn">{{ section.settings.primary_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.secondary_label != blank -%}
+          <a href="{{ section.settings.secondary_url }}" class="button button--secondary halora-btn halora-btn--ghost">{{ section.settings.secondary_label }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+  {%- if section.settings.scroll_label != blank -%}
+    <p class="halora-hero__scroll">{{ section.settings.scroll_label }}</p>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Halora hero",
+  "tag": "section",
+  "class": "section-halora-hero",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "A Pakistani Mineral Wellness Apothecary" },
+    { "type": "richtext", "id": "heading", "label": "Heading (use <em> for italics)", "default": "<p>The salt of <em>small ceremonies.</em></p>" },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Drawn from the Salt Range — the oldest mineral deposit on earth — and hand-blended for the small rituals that anchor better living." },
+    { "type": "header", "content": "CTAs" },
+    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "Shop the Apothecary" },
+    { "type": "url", "id": "primary_url", "label": "Primary URL" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button", "default": "Ritual Sets" },
+    { "type": "url", "id": "secondary_url", "label": "Secondary URL" },
+    { "type": "text", "id": "scroll_label", "label": "Scroll cue", "default": "Scroll" }
+  ],
+  "presets": [{ "name": "Halora hero" }]
+}
+{% endschema %}

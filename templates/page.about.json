@@ -1,0 +1,69 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "<p>Our <em>Origin.</em></p>",
+        "subheading": "A small Pakistani apothecary built around one piece of mineral — pink Himalayan salt, drawn from the oldest deposit on earth. Hand-blended in Lahore. One pair of hands."
+      }
+    },
+    "main": {
+      "type": "halora-rich-text",
+      "settings": { "color_scheme": "scheme-1" },
+      "blocks": {
+        "h1": { "type": "heading", "settings": { "heading": "<p>From the <em>oldest light on earth.</em></p>" } },
+        "p1": { "type": "paragraph", "settings": { "text": "<p>Two hundred and fifty million years ago, before the Himalayas, a sea closed in what is now the northern edge of Pakistan. The water evaporated. The minerals it left behind compressed into salt — slowly, with iron giving the stone its colour, with eighty-four other trace minerals folded in invisibly. Today that deposit is called the Khewra mine, sitting in the Punjab Salt Range. It is the second-largest source of pink Himalayan salt in the world, and the oldest.</p>" } },
+        "p2": { "type": "paragraph", "settings": { "text": "<p>HALORA begins there. Every gram of salt in every object we make is drawn from this stone. We do not import. We are sitting on the oldest light on earth — there is no need to bring any in.</p>" } },
+        "h2": { "type": "heading", "settings": { "heading": "<p>The <em>four houses.</em></p>" } },
+        "p3": { "type": "paragraph", "settings": { "text": "<p>We work in four directions, because salt does four things well — and we wanted to follow each one all the way down.</p><ul><li><strong>Wellness · Skincare</strong> — bars, scrubs, crystals, and one cool hand-carved tool. For the body, morning and night.</li><li><strong>Wellness · Therapy</strong> — weighted salt-filled cotton pillows and a soft healing light. For the slow ten minutes.</li><li><strong>Home · Light</strong> — hand-carved salt lamps. Soft amber-pink, steady through the night.</li><li><strong>Home · Kitchen</strong> — grinders, refills, and stone for the table. The daily plate and the slow Sunday lunch.</li></ul><p>Nineteen pieces in all. Every piece is hand-blended in our Lahore studio in small batches — typically a hundred units of a thing at a time.</p>" } },
+        "h3": { "type": "heading", "settings": { "heading": "<p>What the brand <em>is built on.</em></p>" } },
+        "s1": { "type": "subheading", "settings": { "text": "Single mineral, four houses" } },
+        "p4": { "type": "paragraph", "settings": { "text": "<p>We use one ingredient as our spine. Everything else — the scent, the wood, the cotton, the carving — exists to let the salt do the work it is good at: cleansing, softening, holding warmth, lightly seasoning, glowing.</p>" } },
+        "s2": { "type": "subheading", "settings": { "text": "Small-batch, in-house" } },
+        "p5": { "type": "paragraph", "settings": { "text": "<p>No factory line. The bars are hand-cut. The scrubs are hand-whipped. The pillows are sewn in our studio. The lamps are hand-carved at the source. If something is delayed, it is because it has not yet been made.</p>" } },
+        "s3": { "type": "subheading", "settings": { "text": "Pakistan-only at launch" } },
+        "p6": { "type": "paragraph", "settings": { "text": "<p>We are starting where the salt is from. International shipping opens soon.</p>" } },
+        "cta": { "type": "button", "settings": { "label": "Read the Founder's Note", "url": "/pages/founder" } }
+      },
+      "block_order": ["h1","p1","p2","h2","p3","h3","s1","p4","s2","p5","s3","p6","cta"]
+    },
+    "principles": {
+      "type": "halora-principles",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "kicker": "The House Rules",
+        "heading": "<p>What we <em>don't</em> do.</p>",
+        "subheading": "The shortest version of who we are is what we have chosen to leave out."
+      },
+      "blocks": {
+        "pr1": { "type": "rule", "settings": { "numeral": "No 01", "heading": "<p>No <em>synthetic fragrance.</em></p>", "body": "Essential oils and natural infusions only." } },
+        "pr2": { "type": "rule", "settings": { "numeral": "No 02", "heading": "<p>No <em>unproven claims.</em></p>", "body": "Every benefit we name is one we can show. Real results, not marketing wishes." } },
+        "pr3": { "type": "rule", "settings": { "numeral": "No 03", "heading": "<p>No <em>parabens, SLS, or fillers.</em></p>", "body": "The salt does the work. Plant-derived saponins, cold-pressed butters, essential oils. Nothing else." } },
+        "pr4": { "type": "rule", "settings": { "numeral": "No 04", "heading": "<p>No <em>unethical sourcing.</em></p>", "body": "Salt drawn from a mine we can name, hand-quarried by a supplier we know." } }
+      },
+      "block_order": ["pr1","pr2","pr3","pr4"]
+    },
+    "care": {
+      "type": "halora-care-strip",
+      "settings": { "color_scheme": "scheme-1" },
+      "blocks": {
+        "c1": { "type": "trust", "settings": { "heading": "Delivery across Pakistan", "body": "Hand-packed in Lahore." } },
+        "c2": { "type": "trust", "settings": { "heading": "Nation Wide Delivery", "body": "Within 3-5 Working Days." } },
+        "c3": { "type": "trust", "settings": { "heading": "Seven-day Returns", "body": "Unopened pieces, no questions." } },
+        "c4": { "type": "trust", "settings": { "heading": "Hand-blended In-House", "body": "Made in small batches." } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    }
+  },
+  "order": ["subhero", "main", "principles", "care"]
+}

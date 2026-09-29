@@ -1,0 +1,139 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_crumbs": false,
+        "crumb_current": "",
+        "parent_label": "",
+        "parent_url": "",
+        "heading": "<p>The <em>Ritual</em> Sets.</p>",
+        "subheading": "Three curated bundles built around how the day actually moves — morning, evening, and the in-between. Save 15% to 25% versus buying the pieces individually. Every bundle arrives wrapped in eggshell linen."
+      }
+    },
+    "rituals": {
+      "type": "halora-rituals",
+      "blocks": {
+        "morning": {
+          "type": "set",
+          "settings": {
+            "anchor": "morning",
+            "tag": "Ritual Set 01",
+            "media": "shopify://shop_images/99.jpg",
+            "kicker": "Ritual Set · 01",
+            "heading": "<p>The <em>Morning</em> Set</p>",
+            "body": "A clean wake-up for the skin and the senses. A cool hand-carved facial tool, a coconut body scrub, and a finishing pinch for the breakfast plate.",
+            "includes_label": "The set includes",
+            "includes": "Clear Scrub — Coconut Infused | 250g\nPink Salt Guasha | hand-carved · with cotton pouch\nOrigin — Pink Salt Grinder | 220g · refillable",
+            "price_label": "PKR 6,300",
+            "was_label": "PKR 7,400",
+            "save_label": "Save 15%",
+            "cta_label": "Add the Set",
+            "cta_url": "/products/morning-set"
+          }
+        },
+        "sanctuary": {
+          "type": "set",
+          "settings": {
+            "anchor": "sanctuary",
+            "tag": "Ritual Set 02",
+            "media": "shopify://shop_images/101.jpg",
+            "kicker": "Ritual Set · 02",
+            "heading": "<p>The <em>Sanctuary</em> Box</p>",
+            "body": "For slower evenings. The lavender bath, the scrub across the shoulders, the warm weighted pillow, the soft amber glow on the nightstand.",
+            "includes_label": "The set includes",
+            "includes": "Evening Soak — Lavender Bath Crystals | 500g\nRest Scrub — Lavender Infused | 250g\nHalo Pillow — Salt Therapy | 12 × 6 in\nArbor — Salt Healing Light | wall socket plug-in",
+            "price_label": "PKR 10,250",
+            "was_label": "PKR 12,800",
+            "save_label": "Save 20%",
+            "cta_label": "Add the Set",
+            "cta_url": "/products/sanctuary-box"
+          }
+        },
+        "gifting": {
+          "type": "set",
+          "settings": {
+            "anchor": "gifting",
+            "tag": "Ritual Set 03 · Gift Box",
+            "media": "shopify://shop_images/102_VARIRANT_2.jpg",
+            "kicker": "Ritual Set · 03",
+            "heading": "<p>The <em>Gifting</em> Edit</p>",
+            "body": "Eid, weddings, the first dinner in a new house. A piece from each of the four houses — the bath, the pillow, the light, the table — wrapped in eggshell linen.",
+            "includes_label": "The set includes",
+            "includes": "Morning Ritual — Peppermint Bath Crystals | 500g\nHalo Pillow — Salt Therapy | 12 × 6 in\nRadiance — Natural Pink Salt Lamp | 1–1.5 kg\nPink Salt Serving Plate | 8 in round\nSpark — Chilli Salt Grinder | 220g\nGarden — Mixed Herb Salt Grinder | 220g",
+            "price_label": "PKR 12,700",
+            "was_label": "PKR 16,950",
+            "save_label": "Save 25%",
+            "cta_label": "Add the Set",
+            "cta_url": "/products/gifting-edit"
+          }
+        }
+      },
+      "block_order": [
+        "morning",
+        "sanctuary",
+        "gifting"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "care": {
+      "type": "halora-care-strip",
+      "blocks": {
+        "c1": {
+          "type": "trust",
+          "settings": {
+            "heading": "Delivery across Pakistan",
+            "body": "Hand-packed in Lahore."
+          }
+        },
+        "c2": {
+          "type": "trust",
+          "settings": {
+            "heading": "Nation Wide Delivery",
+            "body": "Within 3-5 Working Days."
+          }
+        },
+        "c3": {
+          "type": "trust",
+          "settings": {
+            "heading": "Seven-day Returns",
+            "body": "Unopened pieces, no questions."
+          }
+        },
+        "c4": {
+          "type": "trust",
+          "settings": {
+            "heading": "Hand-blended In-House",
+            "body": "Made in small batches."
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "subhero",
+    "rituals",
+    "care"
+  ]
+}

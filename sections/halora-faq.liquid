@@ -1,0 +1,53 @@
+<section class="halora-faq color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <header class="halora-section-head">
+      {%- if section.settings.kicker != blank -%}<p class="halora-kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+      <hr class="halora-rule">
+      {%- if section.settings.heading != blank -%}<h2 class="halora-section-head__h2">{{ section.settings.heading }}</h2>{%- endif -%}
+    </header>
+    <div class="halora-faq__wrap">
+      {%- for block in section.blocks -%}
+        <details class="halora-faq__item" {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+          <summary>
+            <span>{{ block.settings.question }}</span>
+            <span class="halora-faq__plus" aria-hidden="true"></span>
+          </summary>
+          <div class="halora-faq__answer">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora FAQ",
+  "tag": "section",
+  "class": "section-halora-faq",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Questions" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Asked and <em>answered.</em></p>" }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Q&A",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Where do you ship — and how long does it take?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Across Pakistan only at launch. Lahore and Karachi: 1–3 working days. Other cities: 3–5 working days via Leopards Courier.</p>" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [{
+    "name": "Halora FAQ",
+    "blocks": [
+      { "type": "qa", "settings": { "question": "Where do you ship — and how long does it take?", "answer": "<p>Across Pakistan only at launch. Lahore and Karachi: 1–3 working days. Other cities: 3–5 working days via Leopards Courier.</p>" } },
+      { "type": "qa", "settings": { "question": "Is cash on delivery available?", "answer": "<p>Yes — across Pakistan. There is a small COD handling fee added at checkout. Bank transfer and card payment are also accepted, with no fee.</p>" } },
+      { "type": "qa", "settings": { "question": "What is your return policy?", "answer": "<p>Unopened pieces can be returned within seven days. Damaged pieces are replaced. Opened consumables are not returnable for hygiene reasons.</p>" } },
+      { "type": "qa", "settings": { "question": "Is the salt actually from Pakistan?", "answer": "<p>Yes. Every gram is drawn from the Khewra mine in Pakistan's Salt Range. We do not import.</p>" } }
+    ]
+  }]
+}
+{% endschema %}

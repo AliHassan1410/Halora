@@ -1,0 +1,118 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_crumbs": false,
+        "crumb_current": "",
+        "parent_label": "",
+        "parent_url": "",
+        "heading": "<p>Find <em>a stockist.</em></p>",
+        "subheading": "At launch HALORA is available only at shophalora.com, hand-packed from our studio in Lahore and shipped across Pakistan. Select physical stockists open soon."
+      }
+    },
+    "main": {
+      "type": "halora-rich-text",
+      "blocks": {
+        "h1": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>No physical <em>stockists yet.</em></p>"
+          }
+        },
+        "p1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>We are starting online-only to keep the operation small and the prices honest. Soon, we will partner with curated lifestyle shops in Lahore, Karachi, and Islamabad. This page will list them as they go live.</p>"
+          }
+        },
+        "h2": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Are you a <em>buyer or shop owner?</em></p>"
+          }
+        },
+        "p2": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>If you run an apothecary, lifestyle shop, or wellness space in Pakistan and would like to carry HALORA, we'd love to hear from you.</p>"
+          }
+        },
+        "s1": {
+          "type": "subheading",
+          "settings": {
+            "text": "What we look for in a stockist"
+          }
+        },
+        "p3": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ul><li>Curated lifestyle, wellness, or apothecary positioning — not mass retail.</li><li>Considered visual merchandising — Halora pieces need light and breathing room.</li><li>Pakistan-based, with at least one physical location.</li><li>Alignment with our house rules</li></ul>"
+          }
+        },
+        "cta1": {
+          "type": "button",
+          "settings": {
+            "label": "Stockist enquiry",
+            "url": "/pages/contact",
+            "style": "primary"
+          }
+        },
+        "div": {
+          "type": "divider",
+          "settings": {}
+        },
+        "h3": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>For <em>customers.</em></p>"
+          }
+        },
+        "p4": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Until physical stockists open, every piece is available on this site. Cash on Delivery anywhere in Pakistan, 1–5 day shipping, seven-day returns.</p>"
+          }
+        },
+        "cta2": {
+          "type": "button",
+          "settings": {
+            "label": "Shop the Apothecary",
+            "url": "/collections/all",
+            "style": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "p1",
+        "h2",
+        "p2",
+        "s1",
+        "p3",
+        "cta1",
+        "div",
+        "h3",
+        "p4",
+        "cta2"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "subhero",
+    "main"
+  ]
+}

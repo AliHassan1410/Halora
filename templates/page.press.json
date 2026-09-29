@@ -1,0 +1,118 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_crumbs": false,
+        "crumb_current": "",
+        "parent_label": "",
+        "parent_url": "",
+        "heading": "<p>Press &amp; <em>mentions.</em></p>",
+        "subheading": "HALORA launches publicly in summer 2026. This page is a quiet home for coverage, brand assets, and a way for journalists to reach the founder directly."
+      }
+    },
+    "main": {
+      "type": "halora-rich-text",
+      "blocks": {
+        "h1": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>The brand in <em>one line.</em></p>"
+          }
+        },
+        "q1": {
+          "type": "quote",
+          "settings": {
+            "text": "<p>A Pakistani mineral wellness apothecary built around pink Himalayan salt from the Khewra mine — hand-blended in small batches in Lahore, across four houses: Skincare, Therapy, Light, Kitchen.</p>"
+          }
+        },
+        "h2": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Key <em>facts.</em></p>"
+          }
+        },
+        "p1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ul><li><strong>Founded:</strong> 2026, Lahore, Pakistan</li><li><strong>Founder:</strong> Solo, hands-on operation</li><li><strong>Source:</strong> Khewra mine, Pakistan Salt Range — world's oldest pink salt deposit (~250M years)</li><li><strong>Product range:</strong> 19 pieces across 4 houses</li><li><strong>Launch market:</strong> Pakistan online-only; international soon</li><li><strong>Manufacturing:</strong> 100% in-house, hand-blended in Lahore</li></ul>"
+          }
+        },
+        "h3": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>What makes HALORA <em>different.</em></p>"
+          }
+        },
+        "p2": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ul><li>The only Pakistani apothecary putting “Pakistan” on the label.</li><li>Single mineral, four directions — one ingredient followed all the way down across skincare, therapy, light, kitchen.</li><li>Quiet, mineral-coded, against the warm-camel-and-brass register dominant in the category.</li><li>Sole-founder, in-house, small batch — typical run is 100 units of a piece at a time.</li></ul>"
+          }
+        },
+        "h4": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Brand <em>assets.</em></p>"
+          }
+        },
+        "p3": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>For high-resolution images, logo in vector format, founder portrait (on request), and product photography:</p><ul><li><a href=\"/cdn/shop/files/halora-logo.svg\">Logo · SVG (transparent)</a></li><li><a href=\"/cdn/shop/files/halora-logo.png\">Logo · PNG (transparent, high-res)</a></li><li>Full press kit on request — write with publication and deadline.</li></ul>"
+          }
+        },
+        "h5": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Contact for <em>press.</em></p>"
+          }
+        },
+        "p4": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>The founder responds to all press enquiries personally. Email: <a href=\"mailto:haloraliving@gmail.com\">haloraliving@gmail.com</a> (subject: &ldquo;Press&rdquo;). Typical response within 24 hours, Monday to Saturday.</p>"
+          }
+        },
+        "cta": {
+          "type": "button",
+          "settings": {
+            "label": "Get in touch",
+            "url": "/pages/contact",
+            "style": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "q1",
+        "h2",
+        "p1",
+        "h3",
+        "p2",
+        "h4",
+        "p3",
+        "h5",
+        "p4",
+        "cta"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "subhero",
+    "main"
+  ]
+}

@@ -1,0 +1,38 @@
+<section class="halora-newsletter color-{{ section.settings.color_scheme }}">
+  <div class="halora-newsletter__wrap">
+    {%- if section.settings.heading != blank -%}<h3 class="halora-newsletter__h">{{ section.settings.heading }}</h3>{%- endif -%}
+    {%- if section.settings.body != blank -%}<p class="halora-newsletter__body">{{ section.settings.body }}</p>{%- endif -%}
+
+    {%- form 'customer', class: 'halora-newsletter__form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <label class="visually-hidden" for="halora-nl-email">Email</label>
+      <input id="halora-nl-email" type="email" name="contact[email]" placeholder="your email" required autocomplete="email">
+      <button type="submit" name="commit">{{ section.settings.cta_label | default: 'Join' }}</button>
+      {%- if form.posted_successfully? -%}
+        <p class="halora-newsletter__success">{{ section.settings.success_message | default: "Thank you. You're on the list." }}</p>
+      {%- endif -%}
+      {%- if form.errors -%}
+        <p class="halora-newsletter__error">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+    {%- endform -%}
+
+    {%- if section.settings.disclaimer != blank -%}<p class="halora-newsletter__small">{{ section.settings.disclaimer }}</p>{%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora newsletter",
+  "tag": "section",
+  "class": "section-halora-newsletter",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Be among the <em>first to know.</em></p>" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Quiet letters — new pieces, small openings, a recipe or a ritual when there is one to share. Nothing more." },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Join" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thank you. You're on the list." },
+    { "type": "text", "id": "disclaimer", "label": "Disclaimer", "default": "No noise. Unsubscribe whenever." }
+  ],
+  "presets": [{ "name": "Halora newsletter" }]
+}
+{% endschema %}

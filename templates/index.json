@@ -1,0 +1,517 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "halora_hero": {
+      "type": "halora-hero-split",
+      "blocks": {
+        "s1": {
+          "type": "slide",
+          "settings": {
+            "product": "clear-scrub-coconut",
+            "label": "Best Seller",
+            "fallback_name": "",
+            "fallback_price": ""
+          }
+        },
+        "s2": {
+          "type": "slide",
+          "settings": {
+            "product": "pink-salt-guasha",
+            "label": "Best Seller",
+            "fallback_name": "",
+            "fallback_price": ""
+          }
+        },
+        "s3": {
+          "type": "slide",
+          "settings": {
+            "product": "halo-pillow",
+            "label": "Best Seller",
+            "fallback_name": "",
+            "fallback_price": ""
+          }
+        },
+        "s4": {
+          "type": "slide",
+          "settings": {
+            "product": "garden-himalayan-pink-salt-coarse-mixed-herb",
+            "label": "Best Seller",
+            "fallback_name": "",
+            "fallback_price": ""
+          }
+        },
+        "s5": {
+          "type": "slide",
+          "settings": {
+            "product": "evening-soak-lavender-bath-crystals",
+            "label": "Best Seller",
+            "fallback_name": "",
+            "fallback_price": ""
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "eyebrow": "A Pakistani Mineral Wellness Apothecary",
+        "heading": "<p>The salt of <em>small ceremonies.</em></p>",
+        "lede": "Drawn from the Salt Range — the oldest mineral deposit on earth — and hand-blended for the small rituals that anchor better living.",
+        "primary_label": "Shop the Apothecary",
+        "primary_url": "/collections/all",
+        "secondary_label": "Ritual Sets",
+        "secondary_url": "/pages/rituals",
+        "show_meta": true,
+        "meta1_k": "Source",
+        "meta1_v": "<p>Khewra, <em>Pakistan</em></p>",
+        "meta2_k": "Blended",
+        "meta2_v": "<p>In <em>Lahore</em></p>",
+        "meta3_k": "Houses",
+        "meta3_v": "<p><em>Four</em></p>",
+        "show_stats": true,
+        "stat1_v": "<p>250<em>M</em></p>",
+        "stat1_k": "Years of mineral",
+        "stat2_v": "<p>84</p>",
+        "stat2_k": "Trace minerals",
+        "stat3_v": "<p>19</p>",
+        "stat3_k": "Hand-blended pieces",
+        "stat4_v": "<p>1</p>",
+        "stat4_k": "Pair of hands",
+        "tag_default": "Now Shipping",
+        "interval": 3500
+      }
+    },
+    "halora_houses": {
+      "type": "halora-houses",
+      "blocks": {
+        "h1": {
+          "type": "house",
+          "settings": {
+            "tone": "dawn",
+            "image": "shopify://shop_images/halora-house-01-skincare.jpg",
+            "house_number": "House 01",
+            "name": "<p>Wellness <em>Skincare</em></p>",
+            "description": "Bars, scrubs, crystals, and one hand-carved tool. For the body, morning and night.",
+            "cta_label": "Shop the house →",
+            "url": "/collections/skincare"
+          }
+        },
+        "h2": {
+          "type": "house",
+          "settings": {
+            "tone": "sage",
+            "image": "shopify://shop_images/halora-house-02-therapy.jpg",
+            "house_number": "House 02",
+            "name": "<p>Wellness <em>Therapy</em></p>",
+            "description": "Salt-filled pillows and a soft healing light. For the slow ten minutes that change the rest.",
+            "cta_label": "Shop the house →",
+            "url": "/collections/therapy"
+          }
+        },
+        "h3": {
+          "type": "house",
+          "settings": {
+            "tone": "dawn",
+            "image": "shopify://shop_images/halora-house-03-light.jpg",
+            "house_number": "House 03",
+            "name": "<p>Home <em>Light</em></p>",
+            "description": "Hand-carved salt lamps. Soft amber-pink, steady through the night.",
+            "cta_label": "Shop the house →",
+            "url": "/collections/light"
+          }
+        },
+        "h4": {
+          "type": "house",
+          "settings": {
+            "tone": "dove",
+            "image": "shopify://shop_images/halora-house-04-kitchen.jpg",
+            "house_number": "House 04",
+            "name": "<p>Home <em>Kitchen</em></p>",
+            "description": "Grinders, refills, and stone for the table. The daily plate and the slow Sunday lunch.",
+            "cta_label": "Shop the house →",
+            "url": "/collections/kitchen"
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "kicker": "The Four Houses",
+        "heading": "<p>One mineral, <em>four lives.</em></p>",
+        "subheading": "Each house draws from the same Salt Range stone — taking a different shape for a different part of the day."
+      }
+    },
+    "halora_rituals": {
+      "type": "halora-ritual-teaser",
+      "blocks": {
+        "r1": {
+          "type": "ritual",
+          "settings": {
+            "tone": "eggshell",
+            "image": "shopify://shop_images/99.jpg",
+            "tag_label": "Ritual Set 01",
+            "heading": "<p>The <em>Morning</em> Set</p>",
+            "body": "A clean wake-up for the skin and the senses. Coconut scent, hand-carved guasha, a finishing pinch for the breakfast plate.",
+            "price_label": "PKR 6,300",
+            "was_label": "PKR 7,400",
+            "save_label": "Save 15%",
+            "url": "/products/morning-set"
+          }
+        },
+        "r2": {
+          "type": "ritual",
+          "settings": {
+            "tone": "dawn",
+            "image": "shopify://shop_images/101.jpg",
+            "tag_label": "Ritual Set 02",
+            "heading": "<p>The <em>Sanctuary</em> Box</p>",
+            "body": "For slower evenings. The lavender bath, the scrub, the warm pillow, the soft amber glow.",
+            "price_label": "PKR 10,250",
+            "was_label": "PKR 12,800",
+            "save_label": "Save 20%",
+            "url": "/products/sanctuary-box"
+          }
+        },
+        "r3": {
+          "type": "ritual",
+          "settings": {
+            "tone": "dove",
+            "image": "shopify://shop_images/102_VARIRANT_2.jpg",
+            "tag_label": "Ritual Set 03",
+            "heading": "<p>The <em>Gifting</em> Edit</p>",
+            "body": "A piece from each of the four houses — bath, pillow, light, table — for a complete ritual experience.",
+            "price_label": "PKR 12,700",
+            "was_label": "PKR 16,950",
+            "save_label": "Save 25%",
+            "url": "/products/gifting-edit"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "kicker": "The Ritual Sets",
+        "heading": "<p>For the practice, <em>not the moment.</em></p>",
+        "subheading": "Three sets built around how the day actually moves — morning, evening, and the in-between."
+      }
+    },
+    "halora_reviews": {
+      "type": "halora-reviews",
+      "blocks": {
+        "rv1": {
+          "type": "review",
+          "settings": {
+            "body": "The Rest Scrub has changed my evenings. The bathroom smells like lavender for an hour after. My shoulders forget the day.",
+            "name": "Aiman R.",
+            "location": "Lahore",
+            "verified": true
+          }
+        },
+        "rv2": {
+          "type": "review",
+          "settings": {
+            "body": "I bought the Halo Pillow for my mother's neck. She has used it every night since. The salt warms slowly and holds.",
+            "name": "Sara K.",
+            "location": "Karachi",
+            "verified": true
+          }
+        },
+        "rv3": {
+          "type": "review",
+          "settings": {
+            "body": "I keep the Arbor on my bedside. The glow is soft enough that my husband doesn't notice, and bright enough that I don't need my phone at three in the morning.",
+            "name": "Noor F.",
+            "location": "Islamabad",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "rv1",
+        "rv2",
+        "rv3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "kicker": "From the early circle",
+        "heading": "<p>What people <em>have said.</em></p>",
+        "subheading": "A few notes from the people who came before launch."
+      }
+    },
+    "halora_pillars": {
+      "type": "halora-pillars",
+      "blocks": {
+        "p1": {
+          "type": "pillar",
+          "settings": {
+            "numeral": "i.",
+            "heading": "<p>From a single <em>mine.</em></p>",
+            "body": "Hand-quarried at Khewra in Pakistan's Salt Range — the world's oldest pink salt deposit. Traceable to the slab it came from."
+          }
+        },
+        "p2": {
+          "type": "pillar",
+          "settings": {
+            "numeral": "ii.",
+            "heading": "<p>No <em>shortcuts in.</em></p>",
+            "body": "Plant-derived saponins, cold-pressed butters, essential oils. No synthetic fragrance, no parabens, no SLS, no fillers."
+          }
+        },
+        "p3": {
+          "type": "pillar",
+          "settings": {
+            "numeral": "iii.",
+            "heading": "<p>Made by one <em>pair of hands.</em></p>",
+            "body": "Hand-blended, hand-cut, hand-finished in Lahore. Small batches. Nothing leaves a factory line."
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "kicker": "Why our salt",
+        "heading": "<p>Mineral first. <em>Then everything else.</em></p>",
+        "subheading": "Three reasons HALORA feels different from what is already on the shelf."
+      }
+    },
+    "halora_origin": {
+      "type": "halora-origin",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "kicker": "From the oldest light on earth",
+        "heading": "<p>Two hundred and fifty million years ago, a sea closed. <em>We are still using its salt.</em></p>",
+        "body_1": "Every piece begins as raw stone from Pakistan's Salt Range — the world's second-largest, and the oldest, deposit of pink Himalayan salt. We hand-blend in small batches, in-house, in Lahore.",
+        "body_2": "No synthetic fragrance. No parabens. No SLS. No gold-coded packaging. Silver only, where hardware appears at all. The salt does the work.",
+        "cta_label": "Read the Founder's Note",
+        "cta_url": "/pages/founder"
+      }
+    },
+    "halora_numbers": {
+      "type": "halora-numbers",
+      "blocks": {
+        "n1": {
+          "type": "stat",
+          "settings": {
+            "figure": "<p>250<em>M</em></p>",
+            "label": "Years of mineral"
+          }
+        },
+        "n2": {
+          "type": "stat",
+          "settings": {
+            "figure": "<p>84</p>",
+            "label": "Trace minerals"
+          }
+        },
+        "n3": {
+          "type": "stat",
+          "settings": {
+            "figure": "<p>19</p>",
+            "label": "Hand-blended pieces"
+          }
+        },
+        "n4": {
+          "type": "stat",
+          "settings": {
+            "figure": "<p>1</p>",
+            "label": "Pair of hands"
+          }
+        }
+      },
+      "block_order": [
+        "n1",
+        "n2",
+        "n3",
+        "n4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "halora_principles": {
+      "type": "halora-principles",
+      "blocks": {
+        "pr1": {
+          "type": "rule",
+          "settings": {
+            "numeral": "No 01",
+            "heading": "<p>No <em>synthetic fragrance.</em></p>",
+            "body": "Essential oils and natural infusions only. If a scent needs a chemical to hold, we leave the scent out."
+          }
+        },
+        "pr2": {
+          "type": "rule",
+          "settings": {
+            "numeral": "No 02",
+            "heading": "<p>No <em>unproven claims.</em></p>",
+            "body": "Every benefit we name is one we can show. Real results the mineral is known to produce — not the ones a marketing team wishes it did."
+          }
+        },
+        "pr3": {
+          "type": "rule",
+          "settings": {
+            "numeral": "No 03",
+            "heading": "<p>No <em>parabens, SLS, or fillers.</em></p>",
+            "body": "The salt does the work. Plant-derived saponins, cold-pressed butters, essential oils. Nothing else."
+          }
+        },
+        "pr4": {
+          "type": "rule",
+          "settings": {
+            "numeral": "No 04",
+            "heading": "<p>No <em>unethical sourcing.</em></p>",
+            "body": "Salt drawn from a mine we can name, hand-quarried by a supplier we know. No mystery origin, no middlemen we can't trace back to the slab."
+          }
+        }
+      },
+      "block_order": [
+        "pr1",
+        "pr2",
+        "pr3",
+        "pr4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-4",
+        "kicker": "The House Rules",
+        "heading": "<p>What we <em>don't</em> do.</p>",
+        "subheading": "The shortest version of who we are is what we have chosen to leave out."
+      }
+    },
+    "halora_faq": {
+      "type": "halora-faq",
+      "blocks": {
+        "f1": {
+          "type": "qa",
+          "settings": {
+            "question": "Where do you ship — and how long does it take?",
+            "answer": "<p>We Ship Across Pakistan! Parcels are expected to ship within 3-5 business days.</p><p></p>"
+          }
+        },
+        "f2": {
+          "type": "qa",
+          "settings": {
+            "question": "Is cash on delivery available?",
+            "answer": "<p>Yes — across Pakistan. There is a small COD handling fee added at checkout, which is free on orders above PKR 5,000. Bank transfer is also accepted, with no fee.</p>"
+          }
+        },
+        "f3": {
+          "type": "qa",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>Unopened pieces can be returned within seven days. Damaged pieces are replaced. Opened consumables are not returnable for hygiene reasons.</p>"
+          }
+        },
+        "f4": {
+          "type": "qa",
+          "settings": {
+            "question": "Is the salt actually from Pakistan?",
+            "answer": "<p>Yes. Every gram is drawn from the Khewra mine in Pakistan's Salt Range. We do not import.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "kicker": "Questions",
+        "heading": "<p>Asked and <em>answered.</em></p>"
+      }
+    },
+    "halora_care": {
+      "type": "halora-care-strip",
+      "blocks": {
+        "c1": {
+          "type": "trust",
+          "settings": {
+            "heading": "Delivery across Pakistan",
+            "body": "Hand-packed in Lahore. Free over PKR 5,000."
+          }
+        },
+        "c2": {
+          "type": "trust",
+          "settings": {
+            "heading": "Nation Wide Delivery",
+            "body": "Within 3-5 Working Days."
+          }
+        },
+        "c3": {
+          "type": "trust",
+          "settings": {
+            "heading": "Seven-day Returns",
+            "body": "Unopened pieces, no questions. Damages replaced."
+          }
+        },
+        "c4": {
+          "type": "trust",
+          "settings": {
+            "heading": "Hand-blended In-House",
+            "body": "Made in small batches. One pair of hands."
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "halora_newsletter": {
+      "type": "halora-newsletter",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "<p>Be among the <em>first to know.</em></p>",
+        "body": "Quiet letters — new pieces, small openings, a recipe or a ritual when there is one to share. Nothing more.",
+        "cta_label": "Join",
+        "success_message": "Thank you. You're on the list.",
+        "disclaimer": "No noise. Unsubscribe whenever."
+      }
+    }
+  },
+  "order": [
+    "halora_hero",
+    "halora_houses",
+    "halora_rituals",
+    "halora_reviews",
+    "halora_pillars",
+    "halora_origin",
+    "halora_numbers",
+    "halora_principles",
+    "halora_faq",
+    "halora_care",
+    "halora_newsletter"
+  ]
+}

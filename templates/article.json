@@ -1,0 +1,26 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": { "type": "main-halora-article", "settings": { "color_scheme": "scheme-1", "show_shop_cta": true, "shop_label": "Shop the Apothecary", "shop_url": "/collections/all" } },
+    "care": {
+      "type": "halora-care-strip",
+      "settings": { "color_scheme": "scheme-1" },
+      "blocks": {
+        "c1": { "type": "trust", "settings": { "heading": "Delivery across Pakistan", "body": "Hand-packed in Lahore." } },
+        "c2": { "type": "trust", "settings": { "heading": "Nation Wide Delivery", "body": "Within 3-5 Working Days." } },
+        "c3": { "type": "trust", "settings": { "heading": "Seven-day Returns", "body": "Unopened pieces, no questions." } },
+        "c4": { "type": "trust", "settings": { "heading": "Hand-blended In-House", "body": "Made in small batches." } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    }
+  },
+  "order": ["main","care"]
+}

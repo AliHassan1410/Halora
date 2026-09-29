@@ -1,0 +1,57 @@
+<div class="halora-jump-nav" data-jump-nav>
+  <div class="halora-jump-nav__inner">
+    {%- for block in section.blocks -%}
+      {%- assign coll = collections[block.settings.collection] -%}
+      {%- assign is_active = false -%}
+      {%- if template.name == 'collection' and collection.handle == block.settings.collection -%}{%- assign is_active = true -%}{%- endif -%}
+      {%- if coll != blank -%}
+        {%- comment -%}
+          Counts are off by default. This bar links to the four houses, but a
+          customer reading "SKINCARE 6 · THERAPY 3 · LIGHT 2 · KITCHEN 8"
+          while standing on the Therapy page reads those numbers as filter
+          results within Therapy, not as sizes of separate departments — so
+          a 3-product page looked broken next to "KITCHEN 8". Without the
+          numbers the row reads as what it is: navigation between houses,
+          with the current one highlighted by .active.
+        {%- endcomment -%}
+        <a class="halora-jump-nav__link{% if is_active %} active{% endif %}" href="{{ coll.url }}"{% if is_active %} aria-current="page"{% endif %} {{ block.shopify_attributes }}>
+          {{ block.settings.label | default: coll.title }}
+          {%- if section.settings.show_counts -%}
+            <span class="halora-jump-nav__count">{{ coll.products_count }}</span>
+          {%- endif -%}
+        </a>
+      {%- elsif block.settings.url != blank -%}
+        <a class="halora-jump-nav__link" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Halora shop jump-nav",
+  "tag": "section",
+  "class": "section-halora-jump-nav",
+  "settings": [
+    { "type": "checkbox", "id": "show_counts", "label": "Show product counts", "default": false, "info": "Off by default. On a collection page these numbers read as filter results for the page you are on, not as the size of each house." }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Jump link",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection (preferred)" },
+        { "type": "text", "id": "label", "label": "Label (defaults to collection title)" },
+        { "type": "url", "id": "url", "label": "Fallback URL (if no collection)" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{
+    "name": "Halora shop jump-nav",
+    "blocks": [
+      { "type": "link" }, { "type": "link" }, { "type": "link" }, { "type": "link" }
+    ]
+  }]
+}
+{% endschema %}

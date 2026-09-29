@@ -1,0 +1,360 @@
+{%- liquid
+  assign product = product
+  assign current_variant = product.selected_or_first_available_variant
+  assign metas = product.metafields.custom
+-%}
+
+<section class="halora-pdp color-{{ section.settings.color_scheme }}">
+  <div class="halora-pdp__wrap page-width">
+
+    {%- liquid
+      # Split "Wellness · Skincare" into parent + child for breadcrumb hierarchy.
+      # Collection titles use " · " as the separator; if absent, treat as flat.
+      assign _crumb_coll = collection | default: product.collections.first
+      assign _crumb_parent = ''
+      assign _crumb_child = ''
+      if _crumb_coll
+        assign _parts = _crumb_coll.title | split: ' · '
+        if _parts.size >= 2
+          assign _crumb_parent = _parts[0]
+          assign _crumb_child = _parts[1]
+        else
+          assign _crumb_child = _crumb_coll.title
+        endif
+      endif
+    -%}
+    <nav class="halora-pdp__crumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="sep">/</span>
+      {%- if _crumb_parent != blank -%}
+        <span class="halora-pdp__crumb-parent">{{ _crumb_parent }}</span>
+        <span class="sep">/</span>
+      {%- endif -%}
+      {%- if _crumb_coll -%}
+        <a href="{{ _crumb_coll.url }}">{{ _crumb_child }}</a><span class="sep">/</span>
+      {%- else -%}
+        <a href="{{ routes.collections_url }}">Shop</a><span class="sep">/</span>
+      {%- endif -%}
+      <span>{{ product.title }}</span>
+    </nav>
+
+    <div class="halora-pdp__grid">
+
+      {%- comment -%}
+        Media column — hero image swaps on thumbnail click or prev/next arrow.
+        Upload up to 8 images per product in Shopify Admin → Products → Media.
+        The first image renders as the hero on load; the rest queue below as
+        thumbnails and cycle through the same hero slot.
+      {%- endcomment -%}
+      <div class="halora-pdp__media-col" data-halora-media data-media-count="{{ product.media.size }}">
+        <div class="halora-pdp__media-main">
+          {%- if product.media.size > 0 -%}
+            <div class="halora-pdp__media-track" data-media-track>
+              {%- for media in product.media -%}
+                <div class="halora-pdp__media-slide" data-media-slide="{{ forloop.index0 }}">
+                  <img
+                    src="{{ media | image_url: width: 900 }}"
+                    srcset="{{ media | image_url: width: 450 }} 450w, {{ media | image_url: width: 900 }} 900w, {{ media | image_url: width: 1400 }} 1400w"
+                    sizes="(min-width: 990px) 50vw, 100vw"
+                    alt="{{ media.alt | escape | default: product.title }}"
+                    width="900"
+                    height="{{ 900 | divided_by: media.aspect_ratio }}"
+                    loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <div class="halora-pdp__media-placeholder">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+          {%- if product.media.size > 1 -%}
+            <button class="halora-pdp__media-arrow halora-pdp__media-arrow--prev" data-media-prev type="button" aria-label="Previous image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <button class="halora-pdp__media-arrow halora-pdp__media-arrow--next" data-media-next type="button" aria-label="Next image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          {%- endif -%}
+          {%- if product.tags contains 'Best Seller' -%}
+            <span class="halora-pdp__badge">Best Seller</span>
+          {%- elsif product.tags contains 'New' -%}
+            <span class="halora-pdp__badge">New</span>
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="halora-pdp__media-thumbs">
+            {%- for media in product.media -%}
+              <button class="halora-pdp__thumb{% if forloop.first %} is-active{% endif %}"
+                      data-media-thumb="{{ forloop.index0 }}"
+                      data-full="{{ media | image_url: width: 900 }}"
+                      data-full-srcset="{{ media | image_url: width: 450 }} 450w, {{ media | image_url: width: 900 }} 900w, {{ media | image_url: width: 1400 }} 1400w"
+                      data-full-alt="{{ media.alt | escape | default: product.title }}"
+                      type="button"
+                      aria-label="View image {{ forloop.index }}">
+                <img src="{{ media | image_url: width: 200 }}" alt="{{ media.alt | escape | default: product.title }}" width="100" height="120" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Body column {%- endcomment -%}
+      <div class="halora-pdp__body">
+        {%- liquid
+          # Same parent/child split for the House label
+          assign _house_parent = ''
+          assign _house_child = ''
+          if product.collections.first
+            assign _hparts = product.collections.first.title | split: ' · '
+            if _hparts.size >= 2
+              assign _house_parent = _hparts[0]
+              assign _house_child = _hparts[1]
+            else
+              assign _house_child = product.collections.first.title
+            endif
+          endif
+        -%}
+        {%- if _house_child != blank -%}
+          <p class="halora-pdp__house">
+            {%- if _house_parent != blank -%}
+              <span class="halora-pdp__house-parent">{{ _house_parent }}</span>
+              <span class="halora-pdp__house-sep">/</span>
+            {%- endif -%}
+            <span class="halora-pdp__house-child">{{ _house_child }}</span>
+          </p>
+        {%- endif -%}
+        <h1 class="halora-pdp__title">{{ product.title }}</h1>
+
+        {%- if metas.positioning != blank -%}
+          <p class="halora-pdp__tagline">{{ metas.positioning }}</p>
+        {%- endif -%}
+
+        <div class="halora-pdp__price">
+          <span class="now">
+            <span class="pkr">PKR</span> {{ current_variant.price | money_without_currency }}
+          </span>
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            <span class="was">{{ current_variant.compare_at_price | money }}</span>
+          {%- endif -%}
+          {%- if metas.format != blank -%}
+            <span class="format">{{ metas.format }}</span>
+          {%- endif -%}
+        </div>
+
+        {% render 'halora-pdp-highlights', product: product %}
+        {%- if metas.buying_note != blank -%}
+          <p class="halora-pdp__buying-note">{{ metas.buying_note }}</p>
+        {%- endif -%}
+
+        {%- comment -%} Variant picker (size, scent, etc.) {%- endcomment -%}
+        {%- if product.has_only_default_variant == false -%}
+          <variant-selects class="halora-pdp__variants" data-url="{{ product.url }}" data-section="{{ section.id }}">
+            {%- for option in product.options_with_values -%}
+              <div class="halora-pdp__option">
+                <p class="halora-pdp__option-label">{{ option.name }}</p>
+                <div class="halora-pdp__option-values">
+                  {%- for value in option.values -%}
+                    <input type="radio"
+                           id="opt-{{ section.id }}-{{ forloop.index }}-{{ forloop.parentloop.index }}"
+                           name="options[{{ option.name }}]"
+                           value="{{ value | escape }}"
+                           {% if option.selected_value == value %}checked{% endif %}>
+                    <label for="opt-{{ section.id }}-{{ forloop.index }}-{{ forloop.parentloop.index }}">{{ value }}</label>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </variant-selects>
+        {%- endif -%}
+
+        {%- comment -%} Buy form — uses Shopify native cart {%- endcomment -%}
+        <product-form class="halora-pdp__form" data-section-id="{{ section.id }}" data-hide-errors="false">
+          {%- form 'product', product, id: 'halora-product-form', class: 'halora-pdp__product-form', novalidate: 'novalidate' -%}
+            <input type="hidden" name="id" value="{{ current_variant.id }}" disabled>
+            <div class="halora-pdp__actions">
+              <button
+                type="submit"
+                name="add"
+                class="halora-btn halora-pdp__add"
+                {% if current_variant.available == false %}aria-disabled="true"{% endif %}>
+                <span>
+                  {%- if current_variant.available -%}
+                    Add to Cart
+                  {%- else -%}
+                    Sold out
+                  {%- endif -%}
+                </span>
+                <span class="sold-out-message hidden">Sold out</span>
+                <div class="loading__spinner hidden">
+                  <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                </div>
+              </button>
+              <button type="button" class="halora-btn halora-btn--ghost halora-pdp__save" aria-label="Save for later">♡</button>
+            </div>
+            <p class="halora-pdp__error hidden" role="alert"></p>
+            {{ form | payment_button }}
+          {%- endform -%}
+        </product-form>
+
+        <div class="halora-pdp__trust">
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h13l5 5v5h-3"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg><span>Ships 1–3 days</span></div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Hand-blended in Lahore</span></div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6z"/></svg><span>COD nationwide</span></div>
+        </div>
+
+        {%- comment -%}
+          STRUCTURED COPY BLOCKS (metafields).
+          Sheet format: bold inline label ("Ritual.") prefixes the body,
+          no separate heading. Ritual/Composition/Origin are `rich_text_field`,
+          so we run through `metafield_tag` (JSON → HTML) then splice the
+          bold label into the first <p>. Format is plain text.
+        {%- endcomment -%}
+        {%- if metas.ritual != blank -%}
+          <div class="halora-pdp__section halora-pdp__section-body rte">{{ metas.ritual | metafield_tag | replace_first: '<p>', '<p><em class="halora-pdp__label">Ritual &mdash;</em> ' }}</div>
+        {%- endif -%}
+        {%- if metas.composition != blank -%}
+          <div class="halora-pdp__section halora-pdp__section-body rte">{{ metas.composition | metafield_tag | replace_first: '<p>', '<p><em class="halora-pdp__label">Composition &mdash;</em> ' }}</div>
+        {%- endif -%}
+        {%- if metas.origin != blank -%}
+          <div class="halora-pdp__section halora-pdp__section-body rte">{{ metas.origin | metafield_tag | replace_first: '<p>', '<p><em class="halora-pdp__label">Origin &mdash;</em> ' }}</div>
+        {%- endif -%}
+        {%- if metas.format_full != blank -%}
+          <div class="halora-pdp__section halora-pdp__section-body rte"><p><em class="halora-pdp__label">Format &mdash;</em> {{ metas.format_full }}</p></div>
+        {%- endif -%}
+
+        {%- comment -%}
+          Fallback: if no metafields, render the product description directly.
+          It already has inline "Ritual." / "Composition." / etc. bold labels
+          from the admin body (per the sheet).
+        {%- endcomment -%}
+        {%- if metas.ritual == blank and metas.composition == blank and metas.origin == blank and product.description != blank -%}
+          <div class="halora-pdp__section halora-pdp__section-body rte">{{ product.description }}</div>
+        {%- endif -%}
+
+        {% render 'halora-pdp-expandables', product: product %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .halora-pdp__buying-note {
+    font-family: var(--font-heading-family, Georgia, serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(0,0,0,0.65);
+    padding: 14px 18px;
+    margin: 10px 0 22px;
+    border-left: 2px solid #A85E52;
+    background: rgba(168, 94, 82, 0.04);
+    max-width: 55ch;
+  }
+</style>
+
+<!-- Start of Judge.me code -->
+<div class="halora-judgeme-wrap page-width">
+  {% assign has_legacy = false %}
+  {% if product.metafields.judgeme.widget.size > 20 %}{% assign has_legacy = true %}{% endif %}
+  <div style='clear:both'></div>
+  <div id='judgeme_product_reviews'
+       class='jdgm-widget jdgm-review-widget'
+       data-product-title='{{ product.title | escape }}'
+       data-id='{{ product.id }}'
+       data-product-id='{{ product.id }}'
+       data-widget='review'
+       data-auto-install='false'
+       data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}'
+       data-entry-point='review_widget.js'
+       data-entry-key='review-widget/main.js'>
+    {% if has_legacy %}<div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>{% endif %}
+  </div>
+  {% if product.metafields.judgeme.review_widget_data %}
+    <script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>
+  {% endif %}
+</div>
+<style>
+  .halora-judgeme-wrap { margin: 48px auto 24px; }
+  @media (max-width: 640px) { .halora-judgeme-wrap { margin: 32px auto 16px; } }
+</style>
+<!-- End of Judge.me code -->
+
+{% render 'halora-frequently-bought', current_product: product, heading: 'Frequently bought together.' %}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+
+<script>
+  (function () {
+    var block = document.querySelector('[data-halora-media]');
+    if (!block) return;
+    var track = block.querySelector('[data-media-track]');
+    var slides = block.querySelectorAll('[data-media-slide]');
+    var thumbs = block.querySelectorAll('[data-media-thumb]');
+    var prev = block.querySelector('[data-media-prev]');
+    var next = block.querySelector('[data-media-next]');
+    if (!track || slides.length < 2) return;
+
+    var cur = 0;
+    var INTERVAL = 3000;
+    var timer = null;
+
+    function show(i) {
+      cur = (i + slides.length) % slides.length;
+      // Slide the horizontal track — each slide is 100% wide, so shifting
+      // by -100% × cur brings the next image into view with a scroll motion.
+      track.style.transform = 'translateX(' + (-100 * cur) + '%)';
+      thumbs.forEach(function (x, idx) { x.classList.toggle('is-active', idx === cur); });
+    }
+    function startTimer() { stopTimer(); timer = setInterval(function () { show(cur + 1); }, INTERVAL); }
+    function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+
+    thumbs.forEach(function (t, idx) {
+      t.addEventListener('click', function () { show(idx); startTimer(); });
+    });
+    prev && prev.addEventListener('click', function () { show(cur - 1); startTimer(); });
+    next && next.addEventListener('click', function () { show(cur + 1); startTimer(); });
+
+    // Pause on hover so shoppers can dwell on an image; resume on leave.
+    block.addEventListener('mouseenter', stopTimer);
+    block.addEventListener('mouseleave', startTimer);
+
+    startTimer();
+  }());
+</script>
+
+{%- comment -%} Product JSON-LD for SEO {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "image": [{{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }}],
+  "description": {{ product.description | strip_html | truncate: 300 | json }},
+  "sku": {{ current_variant.sku | json }},
+  "brand": { "@type": "Brand", "name": {{ shop.name | json }} },
+  "offers": {
+    "@type": "Offer",
+    "url": {{ shop.url | append: product.url | json }},
+    "priceCurrency": {{ shop.currency | json }},
+    "price": {{ current_variant.price | divided_by: 100.0 | json }},
+    "availability": "{% if current_variant.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}"
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "Halora product",
+  "tag": "section",
+  "class": "section-halora-product",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "presets": [{ "name": "Halora product page" }]
+}
+{% endschema %}

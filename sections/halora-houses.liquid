@@ -1,0 +1,87 @@
+
+<section class="halora-houses color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <header class="halora-section-head">
+      {%- if section.settings.kicker != blank -%}<p class="halora-kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+      <hr class="halora-rule">
+      {%- if section.settings.heading != blank -%}<h2 class="halora-section-head__h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p class="halora-section-head__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    </header>
+
+    <div class="halora-houses__grid">
+      {%- for block in section.blocks -%}
+        <a class="halora-house-card halora-house-card--{{ block.settings.tone }}{% if block.settings.image != blank %} halora-house-card--has-image{% endif %}" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
+          <div class="halora-house-card__bg">
+            {%- if block.settings.image != blank -%}
+              <img
+                class="halora-house-card__img"
+                src="{{ block.settings.image | image_url: width: 900 }}"
+                {%- comment -%}
+                  Measured on a 375px / DPR-2 phone: the card renders 343 CSS px,
+                  so it needs 686 device px. With only 450/900/1400 offered the
+                  browser was forced up to 900w — ~40% more pixels than needed.
+                  700w and 1100w close the gaps for DPR 2 and DPR 3 devices.
+                {%- endcomment -%}
+                srcset="{{ block.settings.image | image_url: width: 450 }} 450w, {{ block.settings.image | image_url: width: 700 }} 700w, {{ block.settings.image | image_url: width: 900 }} 900w, {{ block.settings.image | image_url: width: 1100 }} 1100w, {{ block.settings.image | image_url: width: 1400 }} 1400w"
+                sizes="(min-width: 990px) 25vw, (min-width: 600px) 50vw, 100vw"
+                alt="{{ block.settings.image.alt | escape | default: block.settings.name | strip_html }}"
+                loading="lazy"
+                width="900"
+                height="{{ 900 | divided_by: block.settings.image.aspect_ratio }}">
+            {%- endif -%}
+          </div>
+          <div class="halora-house-card__body">
+            {%- if block.settings.house_number != blank -%}<p class="halora-kicker">{{ block.settings.house_number }}</p>{%- endif -%}
+            {%- if block.settings.name != blank -%}<h3 class="halora-house-card__name">{{ block.settings.name }}</h3>{%- endif -%}
+            {%- if block.settings.description != blank -%}<p class="halora-house-card__desc">{{ block.settings.description }}</p>{%- endif -%}
+            <span class="halora-house-card__arrow">{{ block.settings.cta_label | default: 'Shop the house →' }}</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora four houses",
+  "tag": "section",
+  "class": "section-halora-houses",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The Four Houses" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>One mineral, <em>four lives.</em></p>" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Each house draws from the same Salt Range stone — taking a different shape for a different part of the day." }
+  ],
+  "blocks": [
+    {
+      "type": "house",
+      "name": "House card",
+      "settings": [
+        { "type": "select", "id": "tone", "label": "Tone (fallback if no image)", "default": "dawn", "options": [
+          { "value": "dawn", "label": "Dawn pink (skincare)" },
+          { "value": "sage", "label": "Sage (therapy)" },
+          { "value": "dark", "label": "Charcoal (light)" },
+          { "value": "dove", "label": "Dove (kitchen)" }
+        ] },
+        { "type": "image_picker", "id": "image", "label": "House image" },
+        { "type": "text", "id": "house_number", "label": "House number", "default": "House 01" },
+        { "type": "richtext", "id": "name", "label": "Name", "default": "<p>Wellness <em>Skincare</em></p>" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Bars, scrubs, crystals, and one hand-carved tool. For the body, morning and night." },
+        { "type": "text", "id": "cta_label", "label": "Link label", "default": "Shop the house →" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{
+    "name": "Halora four houses",
+    "blocks": [
+      { "type": "house", "settings": { "tone": "dawn", "house_number": "House 01", "name": "<p>Wellness <em>Skincare</em></p>", "description": "Bars, scrubs, crystals, and one hand-carved tool. For the body, morning and night." } },
+      { "type": "house", "settings": { "tone": "sage", "house_number": "House 02", "name": "<p>Wellness <em>Therapy</em></p>", "description": "Salt-filled pillows and a soft healing light. For the slow ten minutes that change the rest." } },
+      { "type": "house", "settings": { "tone": "dark", "house_number": "House 03", "name": "<p>Home <em>Light</em></p>", "description": "Hand-carved salt lamps. Soft amber-pink, steady through the night." } },
+      { "type": "house", "settings": { "tone": "dove", "house_number": "House 04", "name": "<p>Home <em>Kitchen</em></p>", "description": "Grinders, refills, and stone for the table. The daily plate and the slow Sunday lunch." } }
+    ]
+  }]
+}
+{% endschema %}

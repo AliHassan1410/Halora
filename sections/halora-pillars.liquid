@@ -1,0 +1,54 @@
+
+<section class="halora-pillars color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <header class="halora-section-head">
+      {%- if section.settings.kicker != blank -%}<p class="halora-kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+      <hr class="halora-rule">
+      {%- if section.settings.heading != blank -%}<h2 class="halora-section-head__h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p class="halora-section-head__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    </header>
+    <div class="halora-pillars__grid">
+      {%- for block in section.blocks -%}
+        <div class="halora-pillar" {{ block.shopify_attributes }}>
+          {%- if block.settings.numeral != blank -%}<p class="halora-pillar__num">{{ block.settings.numeral }}</p>{%- endif -%}
+          {%- if block.settings.heading != blank -%}<h3 class="halora-pillar__h">{{ block.settings.heading }}</h3>{%- endif -%}
+          {%- if block.settings.body != blank -%}<p class="halora-pillar__body">{{ block.settings.body }}</p>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora 3-pillar explainer",
+  "tag": "section",
+  "class": "section-halora-pillars",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Why our salt" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Three reasons we don't <em>import a single gram.</em></p>" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Pakistan's Salt Range is the world's oldest pink salt deposit. Here is what that actually means." }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        { "type": "text", "id": "numeral", "label": "Numeral (i / ii / iii)", "default": "i." },
+        { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Two hundred fifty <em>million years.</em></p>" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "The Khewra deposit formed before the Himalayas. The salt has never seen industrial pollution." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{
+    "name": "Halora 3-pillar explainer",
+    "blocks": [
+      { "type": "pillar", "settings": { "numeral": "i.",   "heading": "<p>Two hundred fifty <em>million years.</em></p>", "body": "The Khewra deposit formed in a closing sea before the Himalayas existed. The salt has never seen industrial pollution." } },
+      { "type": "pillar", "settings": { "numeral": "ii.",  "heading": "<p>Eighty-four <em>trace minerals.</em></p>", "body": "Iron, magnesium, potassium, calcium — and eighty more. The pink colour is the iron; the rest is invisible work." } },
+      { "type": "pillar", "settings": { "numeral": "iii.", "heading": "<p>One pair of <em>hands.</em></p>", "body": "Every piece is hand-blended, hand-cut, hand-finished in Lahore. Small batches. Nothing leaves a factory line." } }
+    ]
+  }]
+}
+{% endschema %}

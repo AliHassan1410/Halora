@@ -1,0 +1,116 @@
+<article class="halora-article color-{{ section.settings.color_scheme }}">
+  <p class="halora-article__meta">
+    <a href="{{ blog.url }}">Journal</a>
+    <span class="dot">·</span> {{ article.tags | first | default: 'Note' }}
+    <span class="dot">·</span> {{ article.content | strip_html | truncatewords: 1, '' | size | divided_by: 1000 | plus: 3 }} min read
+    <span class="dot">·</span> {{ article.published_at | date: '%-d %B %Y' }}
+  </p>
+
+  <h1 class="halora-article__h1">{{ article.title }}</h1>
+
+  {%- if article.excerpt != blank -%}
+    <p class="halora-article__lede">{{ article.excerpt | strip_html }}</p>
+  {%- endif -%}
+
+  {%- if article.image -%}
+    <img class="halora-article__cover"
+         src="{{ article.image | image_url: width: 1200 }}"
+         srcset="{{ article.image | image_url: width: 600 }} 600w, {{ article.image | image_url: width: 1200 }} 1200w, {{ article.image | image_url: width: 1800 }} 1800w"
+         sizes="(min-width: 990px) 76rem, 100vw"
+         alt="{{ article.image.alt | escape | default: article.title }}"
+         width="1200"
+         height="{{ 1200 | divided_by: article.image.aspect_ratio }}"
+         loading="eager">
+  {%- else -%}
+    <div class="halora-article__cover halora-article__cover--placeholder"></div>
+  {%- endif -%}
+
+  <div class="halora-article__body">{{ article.content }}</div>
+
+  <div class="halora-article__author">
+    <div class="halora-article__avatar"></div>
+    <div>
+      <p class="halora-article__author-name">{{ article.author }}</p>
+      <p class="halora-article__author-tag">{{ shop.name }} · Lahore</p>
+    </div>
+  </div>
+
+  {%- assign next_article = blank -%}
+  {%- for post in blog.articles -%}
+    {%- if post.id == article.id and forloop.index0 < blog.articles.size %}
+      {%- assign next_index = forloop.index -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if next_index -%}{%- assign next_article = blog.articles[next_index] -%}{%- endif -%}
+  {%- if next_article != blank and next_article -%}
+    <div class="halora-article__next">
+      <p class="halora-article__next-label">Read next</p>
+      <p class="halora-article__next-title"><a href="{{ next_article.url }}">{{ next_article.title }}</a></p>
+      <p class="halora-article__next-meta">{{ next_article.tags | first | default: 'Note' }}</p>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_shop_cta -%}
+    <div class="halora-article__shop-cta">
+      <p class="halora-kicker">Begin the ritual</p>
+      <h3>Browse the <em>apothecary.</em></h3>
+      <a href="{{ section.settings.shop_url | default: routes.collections_url }}" class="halora-btn">{{ section.settings.shop_label | default: 'Shop the Apothecary' }}</a>
+    </div>
+  {%- endif -%}
+</article>
+
+{%- comment -%}
+  Article structured data. Every optional field guarded — Liquid errors on
+  empty fields (e.g. article.image on posts without a featured image) will
+  otherwise inject literal error strings into the JSON and break Google's
+  Rich Results validator.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ article.title | json }},
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "author": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": "{{ shop.url }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:{{ 'halora-logo.svg' | asset_url }}"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ shop.url }}{{ article.url }}"
+  }{%- if article.image != blank -%},
+  "image": {
+    "@type": "ImageObject",
+    "url": "https:{{ article.image | image_url: width: 1200 }}",
+    "width": 1200,
+    "height": {{ 1200 | divided_by: article.image.aspect_ratio | round }}
+  }{%- endif -%}{%- if article.tags.size > 0 -%},
+  "articleSection": {{ article.tags | first | json }}
+  {%- endif -%}
+}
+</script>
+
+{% schema %}
+{
+  "name": "Halora article",
+  "tag": "section",
+  "class": "section-halora-article",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "checkbox", "id": "show_shop_cta", "label": "Show shop CTA at bottom", "default": true },
+    { "type": "text", "id": "shop_label", "label": "Shop CTA label", "default": "Shop the Apothecary" },
+    { "type": "url", "id": "shop_url", "label": "Shop CTA URL" }
+  ],
+  "presets": [{ "name": "Halora article" }]
+}
+{% endschema %}

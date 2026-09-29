@@ -1,0 +1,85 @@
+{%- liquid
+  assign rows = section.blocks | where: "type", "row"
+-%}
+
+<section class="halora-houses-feat color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <header class="halora-section-head">
+      {%- if section.settings.kicker != blank -%}<p class="halora-kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+      <hr class="halora-rule">
+      {%- if section.settings.heading != blank -%}<h2 class="halora-section-head__h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p class="halora-section-head__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    </header>
+
+    {%- for block in rows -%}
+      {%- assign coll = collections[block.settings.collection] -%}
+      <div class="halora-houses-feat__row" {{ block.shopify_attributes }}>
+        <header class="halora-houses-feat__head">
+          <div>
+            {%- if block.settings.kicker != blank -%}<p class="halora-houses-feat__kicker">{{ block.settings.kicker }}</p>{%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h3 class="halora-houses-feat__h">{{ block.settings.heading }}</h3>
+            {%- elsif coll != blank -%}
+              <h3 class="halora-houses-feat__h">{{ coll.title }}</h3>
+            {%- endif -%}
+          </div>
+          {%- if coll != blank and block.settings.view_label != blank -%}
+            <a class="halora-houses-feat__view" href="{{ coll.url }}">{{ block.settings.view_label }}</a>
+          {%- endif -%}
+        </header>
+        <div class="halora-houses-feat__grid">
+          {%- if coll != blank -%}
+            {%- assign limit = block.settings.products_to_show | default: 3 -%}
+            {%- for product in coll.products limit: limit -%}
+              {%- render 'card-product', card_product: product, media_aspect_ratio: 'portrait', show_secondary_image: true, quick_add: 'standard' -%}
+            {%- endfor -%}
+          {%- else -%}
+            <p style="color:var(--halora-quiet);font-style:italic;grid-column:1/-1">Pick a collection in the theme editor for this row.</p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{%- comment -%}
+  Load the scripts Dawn's quick-add button needs.
+  Without product-form.js the button silently reloads to /cart instead
+  of AJAX-adding into the drawer.
+{%- endcomment -%}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Halora house showcase",
+  "tag": "section",
+  "class": "section-halora-houses-feat",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Inside the houses" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>A taste of each <em>house.</em></p>" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Three pieces from each of the four houses. The full apothecary lives a click further." }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "House row",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "kicker", "label": "Kicker (above heading)" },
+        { "type": "text", "id": "heading", "label": "Heading (defaults to collection title)" },
+        { "type": "text", "id": "view_label", "label": "View link label", "default": "View the house →" },
+        { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 3, "max": 24, "step": 1, "default": 3 }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Halora house showcase",
+    "blocks": [
+      { "type": "row" }, { "type": "row" }, { "type": "row" }, { "type": "row" }
+    ]
+  }]
+}
+{% endschema %}

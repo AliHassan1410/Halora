@@ -1,0 +1,86 @@
+<section class="halora-rituals color-{{ section.settings.color_scheme }}">
+  <div class="halora-rituals__wrap">
+    {%- for block in section.blocks -%}
+      <div id="{{ block.settings.anchor | default: block.id }}" class="halora-ritual" {{ block.shopify_attributes }}>
+        <div class="halora-ritual__media">
+          {%- if block.settings.media != blank -%}
+            <img src="{{ block.settings.media | image_url: width: 1200 }}"
+                 srcset="{{ block.settings.media | image_url: width: 600 }} 600w, {{ block.settings.media | image_url: width: 1200 }} 1200w"
+                 sizes="(min-width: 990px) 55vw, 100vw"
+                 alt="{{ block.settings.heading | escape | strip_html }}"
+                 loading="lazy">
+          {%- endif -%}
+          {%- if block.settings.tag != blank -%}<span class="halora-ritual__media-tag">{{ block.settings.tag }}</span>{%- endif -%}
+        </div>
+        <div class="halora-ritual__body">
+          {%- if block.settings.kicker != blank -%}<p class="halora-ritual__kicker">{{ block.settings.kicker }}</p>{%- endif -%}
+          {%- if block.settings.heading != blank -%}<h3 class="halora-ritual__h">{{ block.settings.heading }}</h3>{%- endif -%}
+          {%- if block.settings.body != blank -%}<p class="halora-ritual__body-text">{{ block.settings.body }}</p>{%- endif -%}
+          {%- if block.settings.includes != blank -%}
+            <p class="halora-ritual__includes-label">{{ block.settings.includes_label | default: 'The set includes' }}</p>
+            <ul class="halora-ritual__includes">
+              {%- assign rows = block.settings.includes | newline_to_br | split: '<br />' -%}
+              {%- for row in rows -%}
+                {%- assign parts = row | strip | split: '|' -%}
+                {%- if parts[0] != blank -%}
+                  <li>{{ parts[0] | strip }}{%- if parts[1] != blank -%}<span class="qty">{{ parts[1] | strip }}</span>{%- endif -%}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+          {%- if block.settings.price_label != blank -%}
+            <div class="halora-ritual__price">
+              <span class="halora-ritual__price-now">{{ block.settings.price_label }}</span>
+              {%- if block.settings.was_label != blank -%}<span class="halora-ritual__price-was">{{ block.settings.was_label }}</span>{%- endif -%}
+              {%- if block.settings.save_label != blank -%}<span class="halora-ritual__price-save">{{ block.settings.save_label }}</span>{%- endif -%}
+            </div>
+          {%- endif -%}
+          {%- if block.settings.cta_label != blank -%}
+            <a href="{{ block.settings.cta_url | default: '/pages/contact' }}" class="halora-btn">{{ block.settings.cta_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora ritual sets",
+  "tag": "section",
+  "class": "section-halora-rituals",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "blocks": [
+    {
+      "type": "set",
+      "name": "Ritual set",
+      "settings": [
+        { "type": "text", "id": "anchor", "label": "Anchor id (lowercase)", "default": "morning" },
+        { "type": "text", "id": "tag", "label": "Tag", "default": "Ritual Set 01" },
+        { "type": "image_picker", "id": "media", "label": "Media (composition photo)" },
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "Ritual Set 01" },
+        { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>The <em>Morning</em> Set</p>" },
+        { "type": "textarea", "id": "body", "label": "Body" },
+        { "type": "text", "id": "includes_label", "label": "List label", "default": "The set includes" },
+        { "type": "textarea", "id": "includes", "label": "Items (one per line: Name | qty)", "default": "Clear Scrub — Coconut | 250g\nPink Salt Soap Bar | 225g\nOrigin Salt Grinder | 220g · refillable" },
+        { "type": "text", "id": "price_label", "label": "Price", "default": "PKR 3,800" },
+        { "type": "text", "id": "was_label", "label": "Compare-at", "default": "PKR 4,250" },
+        { "type": "text", "id": "save_label", "label": "Save tag", "default": "Save 10%" },
+        { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Add the Set" },
+        { "type": "url", "id": "cta_url", "label": "CTA URL" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Halora ritual sets",
+    "blocks": [
+      { "type": "set", "settings": { "anchor": "morning", "tag": "Ritual Set 01", "kicker": "Ritual Set · 01", "heading": "<p>The <em>Morning</em> Set</p>", "body": "A clean wake-up for the skin and the senses. Coconut scent, brisk salt, a finishing pinch for the breakfast plate.", "includes": "Clear Scrub — Coconut | 250g\nPink Salt Soap Bar | 225g\nOrigin Salt Grinder | 220g · refillable", "price_label": "PKR 3,800", "was_label": "PKR 4,250", "save_label": "Save 10%", "cta_label": "Add the Set" } },
+      { "type": "set", "settings": { "anchor": "sanctuary", "tag": "Ritual Set 02", "kicker": "Ritual Set · 02", "heading": "<p>The <em>Sanctuary</em> Box</p>", "body": "For slower evenings. The scrub, the warm pillow across the shoulders, the soft amber glow on the nightstand.", "includes": "Rest Scrub — Lavender | 250g\nHalo Pillow | 12 × 6 in\nArbor Healing Light | wall socket", "price_label": "PKR 6,500", "was_label": "PKR 7,200", "save_label": "Save 10%", "cta_label": "Add the Set" } },
+      { "type": "set", "settings": { "anchor": "gifting", "tag": "Ritual Set 03 · Gift Box", "kicker": "Ritual Set · 03", "heading": "<p>The <em>Gifting</em> Edit</p>", "body": "Eid, weddings, the first dinner in a new house. A piece from each of the four houses, wrapped in eggshell linen.", "includes": "Pink Salt Guasha | with pouch\nHalo Pillow | 12 × 6 in\nSalt Serving Plate | 8 in round\nOrigin Salt Grinder | 220g", "price_label": "PKR 11,200", "was_label": "PKR 12,400", "save_label": "Save 10%", "cta_label": "Add the Set" } }
+    ]
+  }]
+}
+{% endschema %}

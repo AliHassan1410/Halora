@@ -1,0 +1,89 @@
+{%- liquid
+  assign sub_heading = section.settings.heading
+  assign sub_intro = section.settings.subheading
+
+  comment
+    Liquid's page_title returns the SEO title whenever one is set, not the
+    resource's own title. The houses now carry keyword-led SEO titles
+    ("Pink Salt Scrubs & Skincare Pakistan — HALORA") that belong in the
+    browser tab and in Google, not on the page — so the visible <h1> takes
+    collection.title instead, and the brand naming ("Wellness · Skincare")
+    is preserved. page_title stays the fallback everywhere else.
+  endcomment
+  assign display_title = page_title
+  if template.name == 'collection' and collection.title != blank
+    assign display_title = collection.title
+  endif
+
+  comment
+    Collection pages used to render title -> filter bar -> grid with no
+    context at all. The description was never missing: all four houses
+    already have one in the admin (Collections -> [house] -> Description),
+    nothing was printing it. Fall back to it whenever this section has no
+    explicit subheading of its own.
+
+    Keep house descriptions to a single paragraph. The outer <p> is
+    stripped so the text lands as a direct child of .halora-subhero, which
+    is what the CSS styles (".halora-subhero > p"). Inline markup such as
+    <em> or a link survives; a second paragraph would be merged into the
+    first rather than breaking the layout.
+
+    /collections/all is Shopify's virtual route - no Collection record, so
+    page_title is the literal string "Products" and collection.description
+    is empty. all_heading / all_intro supply both. Keep them in sync with
+    the matching override in layout/theme.liquid, which feeds <title> and
+    the meta/OG tags for the same page.
+  endcomment
+  if template.name == 'collection'
+    if collection.handle == 'all'
+      if sub_heading == blank
+        assign sub_heading = section.settings.all_heading
+      endif
+      if sub_intro == blank
+        assign sub_intro = section.settings.all_intro
+      endif
+    elsif sub_intro == blank and collection.description != blank
+      assign sub_intro = collection.description | remove: '<p>' | remove: '</p>' | strip
+    endif
+  endif
+-%}
+
+<section class="halora-subhero color-{{ section.settings.color_scheme }}">
+  {%- if section.settings.show_crumbs -%}
+    <p class="halora-subhero__crumbs">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="sep">/</span>
+      {%- if section.settings.parent_label != blank -%}<a href="{{ section.settings.parent_url }}">{{ section.settings.parent_label }}</a><span class="sep">/</span>{%- endif -%}
+      <span>{{ section.settings.crumb_current | default: display_title }}</span>
+    </p>
+  {%- endif -%}
+
+  {%- if sub_heading != blank -%}
+    <h1>{{ sub_heading }}</h1>
+  {%- else -%}
+    <h1>{{ display_title }}</h1>
+  {%- endif -%}
+  {%- if sub_intro != blank -%}<p>{{ sub_intro }}</p>{%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Halora subhero",
+  "tag": "section",
+  "class": "section-halora-subhero",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "checkbox", "id": "show_crumbs", "label": "Show breadcrumbs", "default": false },
+    { "type": "text", "id": "crumb_current", "label": "Current crumb label" },
+    { "type": "text", "id": "parent_label", "label": "Parent crumb label" },
+    { "type": "url", "id": "parent_url", "label": "Parent crumb URL" },
+    { "type": "richtext", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" },
+    { "type": "header", "content": "Catch-all collection (/collections/all)" },
+    { "type": "paragraph", "content": "Shopify's /collections/all route has no record in the admin, so its heading and intro are set here. Other collections use their own Description automatically." },
+    { "type": "text", "id": "all_heading", "label": "Heading for /collections/all" },
+    { "type": "textarea", "id": "all_intro", "label": "Intro for /collections/all" }
+  ],
+  "presets": [{ "name": "Halora subhero" }]
+}
+{% endschema %}

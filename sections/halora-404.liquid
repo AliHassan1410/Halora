@@ -1,0 +1,34 @@
+<section class="halora-404 color-{{ section.settings.color_scheme }}">
+  <div class="halora-404__inner">
+    <p class="halora-404__num">{{ section.settings.num_label }}</p>
+    {%- if section.settings.heading != blank -%}<h1 class="halora-404__h">{{ section.settings.heading }}</h1>{%- endif -%}
+    {%- if section.settings.body != blank -%}<p class="halora-404__body">{{ section.settings.body }}</p>{%- endif -%}
+    <div class="halora-404__ctas">
+      {%- if section.settings.primary_label != blank -%}
+        <a href="{{ section.settings.primary_url | default: routes.root_url }}" class="halora-btn">{{ section.settings.primary_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.secondary_label != blank -%}
+        <a href="{{ section.settings.secondary_url | default: routes.collections_url }}" class="halora-btn halora-btn--ghost">{{ section.settings.secondary_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora 404",
+  "tag": "section",
+  "class": "section-halora-404",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "num_label", "label": "Numeral", "default": "404" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>The page you're looking for <em>isn't here.</em></p>" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "It may have moved, or never existed. The salt is still where it was — try the apothecary, or write to us if you were following a link." },
+    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "Home" },
+    { "type": "url", "id": "primary_url", "label": "Primary URL" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button", "default": "Shop the Apothecary" },
+    { "type": "url", "id": "secondary_url", "label": "Secondary URL" }
+  ],
+  "presets": [{ "name": "Halora 404" }]
+}
+{% endschema %}

@@ -1,0 +1,50 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_crumbs": false,
+        "heading": "<p>Shop the <em>Apothecary.</em></p>",
+        "subheading": "Every piece, grouped by house. Hand-blended in Lahore, drawn from Pakistan's Salt Range."
+      }
+    },
+    "by_house": {
+      "type": "halora-house-showcase",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "kicker": "",
+        "heading": "",
+        "subheading": ""
+      },
+      "blocks": {
+        "f1": { "type": "row", "settings": { "collection": "skincare", "kicker": "House 01", "heading": "Wellness · Skincare", "view_label": "", "products_to_show": 8 } },
+        "f2": { "type": "row", "settings": { "collection": "therapy",  "kicker": "House 02", "heading": "Wellness · Therapy",  "view_label": "", "products_to_show": 8 } },
+        "f3": { "type": "row", "settings": { "collection": "light",    "kicker": "House 03", "heading": "Home · Light",        "view_label": "", "products_to_show": 8 } },
+        "f4": { "type": "row", "settings": { "collection": "kitchen",  "kicker": "House 04", "heading": "Home · Kitchen",      "view_label": "", "products_to_show": 8 } }
+      },
+      "block_order": ["f1","f2","f3","f4"]
+    },
+    "care": {
+      "type": "halora-care-strip",
+      "settings": { "color_scheme": "scheme-1" },
+      "blocks": {
+        "c1": { "type": "trust", "settings": { "heading": "Delivery across Pakistan", "body": "Hand-packed in Lahore. Free over PKR 5,000." } },
+        "c2": { "type": "trust", "settings": { "heading": "Nation Wide Delivery", "body": "Within 3-5 Working Days." } },
+        "c3": { "type": "trust", "settings": { "heading": "Seven-day Returns", "body": "Unopened pieces, no questions. Damages replaced." } },
+        "c4": { "type": "trust", "settings": { "heading": "Hand-blended In-House", "body": "Made in small batches. One pair of hands." } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    }
+  },
+  "order": ["subhero", "by_house", "care"]
+}

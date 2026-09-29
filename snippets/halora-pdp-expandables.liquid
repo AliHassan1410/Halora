@@ -1,0 +1,217 @@
+{%- comment -%}
+  HALORA — PDP expandables.
+  Three collapsible sections beneath the buying area:
+    How to use it   ← custom.how_to_use          (multi-line)
+    Storage & care  ← custom.storage_care        (multi-line)
+    Ingredients     ← custom.ingredients_note    (multi-line)
+
+  Every section is metafield-driven. If a product has no content for a
+  section, that section renders nothing (collapses silently). This means
+  the same snippet is safe to render on every product template — quiet
+  when the data isn't there, present when it is.
+
+  Multi-line metafields: each newline becomes a bullet / step.
+
+  Params:
+    product   — Product object. Required.
+{%- endcomment -%}
+
+{%- liquid
+  assign m = product.metafields.custom
+  assign has_use = m.how_to_use
+  assign has_care = m.storage_care
+  assign has_ing = m.ingredients_note
+
+  # Show the section only if at least one block has content.
+  assign any_content = false
+  if has_use != blank or has_care != blank or has_ing != blank
+    assign any_content = true
+  endif
+-%}
+
+{%- if any_content -%}
+<section class="halora-pdp-expand">
+  <header class="halora-pdp-expand__head">
+    <p class="halora-pdp-expand__kicker">Care, considered</p>
+    <h2 class="halora-pdp-expand__title">The <em>ritual</em>, the storage, the care.</h2>
+  </header>
+
+  {%- if has_use != blank -%}
+    <details class="halora-pdp-expand__item">
+      <summary>
+        <span class="halora-pdp-expand__label">How to <em>use it</em></span>
+        <span class="halora-pdp-expand__arrow" aria-hidden="true">+</span>
+      </summary>
+      <ol class="halora-pdp-expand__list halora-pdp-expand__list--num">
+        {%- assign use_lines = m.how_to_use | newline_to_br | split: '<br />' -%}
+        {%- for line in use_lines -%}
+          {%- assign trimmed = line | strip -%}
+          {%- if trimmed != blank -%}
+            <li>{{ trimmed }}</li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ol>
+    </details>
+  {%- endif -%}
+
+  {%- if has_care != blank -%}
+    <details class="halora-pdp-expand__item">
+      <summary>
+        <span class="halora-pdp-expand__label">Storage &amp; <em>care</em></span>
+        <span class="halora-pdp-expand__arrow" aria-hidden="true">+</span>
+      </summary>
+      <ul class="halora-pdp-expand__list halora-pdp-expand__list--bullet">
+        {%- assign care_lines = m.storage_care | newline_to_br | split: '<br />' -%}
+        {%- for line in care_lines -%}
+          {%- assign trimmed = line | strip -%}
+          {%- if trimmed != blank -%}
+            <li>{{ trimmed }}</li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </details>
+  {%- endif -%}
+
+  {%- if has_ing != blank -%}
+    <details class="halora-pdp-expand__item">
+      <summary>
+        <span class="halora-pdp-expand__label">Ingredients &amp; <em>sourcing</em></span>
+        <span class="halora-pdp-expand__arrow" aria-hidden="true">+</span>
+      </summary>
+      <p class="halora-pdp-expand__body">{{ m.ingredients_note | newline_to_br }}</p>
+    </details>
+  {%- endif -%}
+
+  <p class="halora-pdp-expand__care-link">
+    <a href="/pages/care-guide">Read the full Care Guide &rarr;</a>
+  </p>
+</section>
+{%- endif -%}
+
+<style>
+  .halora-pdp-expand {
+    margin: 40px 0 12px;
+    padding: 30px 32px 34px;
+    background: rgba(168, 94, 82, 0.03);
+    border: 1px solid rgba(168, 94, 82, 0.14);
+  }
+  .halora-pdp-expand__head { text-align: center; margin-bottom: 22px; }
+  .halora-pdp-expand__kicker {
+    font-size: 10.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #A85E52;
+    margin: 0 0 6px;
+    font-weight: 500;
+  }
+  .halora-pdp-expand__title {
+    font-family: var(--font-heading-family, Georgia, serif);
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: -0.005em;
+    margin: 0;
+    color: inherit;
+    line-height: 1.15;
+  }
+  .halora-pdp-expand__title em { font-style: italic; font-weight: 400; }
+
+  .halora-pdp-expand__item {
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding: 0;
+  }
+  .halora-pdp-expand__item:last-of-type { border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .halora-pdp-expand__item summary {
+    padding: 18px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    list-style: none;
+    gap: 20px;
+  }
+  .halora-pdp-expand__item summary::-webkit-details-marker { display: none; }
+  .halora-pdp-expand__label {
+    font-family: var(--font-heading-family, Georgia, serif);
+    font-weight: 400;
+    font-size: 17px;
+    color: inherit;
+    letter-spacing: 0.005em;
+  }
+  .halora-pdp-expand__label em { font-style: italic; }
+  .halora-pdp-expand__arrow {
+    font-family: var(--font-heading-family, Georgia, serif);
+    font-weight: 300;
+    font-size: 20px;
+    color: #A85E52;
+    line-height: 1;
+    width: 20px;
+    text-align: center;
+    transition: transform 200ms;
+  }
+  .halora-pdp-expand__item[open] .halora-pdp-expand__arrow { transform: rotate(45deg); color: #333; }
+
+  .halora-pdp-expand__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 4px 4px 24px;
+    list-style: none;
+    font-size: 14px;
+    line-height: 1.55;
+    color: inherit;
+    counter-reset: step;
+  }
+  .halora-pdp-expand__list--num li { counter-increment: step; display: flex; gap: 14px; align-items: baseline; }
+  .halora-pdp-expand__list--num li::before {
+    content: counter(step, decimal-leading-zero);
+    font-family: var(--font-heading-family, Georgia, serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 13px;
+    color: #A85E52;
+    flex-shrink: 0;
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+    min-width: 22px;
+  }
+  .halora-pdp-expand__list--bullet li { display: flex; gap: 12px; align-items: baseline; }
+  .halora-pdp-expand__list--bullet li::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #A85E52;
+    flex-shrink: 0;
+    transform: translateY(-3px);
+  }
+  .halora-pdp-expand__body {
+    font-size: 14.5px;
+    line-height: 1.65;
+    padding: 4px 4px 24px;
+    margin: 0;
+    color: inherit;
+  }
+  .halora-pdp-expand__care-link {
+    text-align: center;
+    margin: 22px 0 0;
+  }
+  .halora-pdp-expand__care-link a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: inherit;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #A85E52;
+    text-decoration: none;
+  }
+  .halora-pdp-expand__care-link a:hover { color: #A85E52; }
+
+  @media (max-width: 640px) {
+    .halora-pdp-expand { padding: 24px 18px 26px; margin: 32px -20px 8px; }
+    .halora-pdp-expand__title { font-size: 20px; }
+    .halora-pdp-expand__label { font-size: 15px; }
+  }
+</style>

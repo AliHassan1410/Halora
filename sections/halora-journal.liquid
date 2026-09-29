@@ -1,0 +1,79 @@
+<section class="halora-journal color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <header class="halora-section-head">
+      {%- if section.settings.kicker != blank -%}<p class="halora-kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+      <hr class="halora-rule">
+      {%- if section.settings.heading != blank -%}<h2 class="halora-section-head__h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p class="halora-section-head__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    </header>
+
+    <div class="halora-journal__grid">
+      {%- if section.settings.blog != blank -%}
+        {%- assign source_blog = blogs[section.settings.blog] -%}
+        {%- for article in source_blog.articles limit: 24 -%}
+          <article class="halora-entry" {{ article.shopify_attributes }}>
+            <a href="{{ article.url }}" class="halora-entry__link">
+              <div class="halora-entry__cover halora-entry__cover--c{{ forloop.index }}">
+                {%- if article.image -%}
+                  <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.image.alt | escape }}" loading="lazy" width="600" height="450">
+                {%- endif -%}
+              </div>
+              <p class="halora-entry__meta">{{ article.tags | first | default: 'Note' }} &middot; {{ article.content | strip_html | truncatewords: 1, '' | size | divided_by: 1000 | plus: 3 }} min read</p>
+              <h3 class="halora-entry__h">{{ article.title }}</h3>
+              <p class="halora-entry__body">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+              <span class="halora-entry__read">Read the note</span>
+            </a>
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for block in section.blocks -%}
+          <article class="halora-entry" {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.url | default: '#' }}" class="halora-entry__link">
+              <div class="halora-entry__cover halora-entry__cover--c{{ forloop.index }}"></div>
+              {%- if block.settings.meta != blank -%}<p class="halora-entry__meta">{{ block.settings.meta }}</p>{%- endif -%}
+              {%- if block.settings.heading != blank -%}<h3 class="halora-entry__h">{{ block.settings.heading }}</h3>{%- endif -%}
+              {%- if block.settings.body != blank -%}<p class="halora-entry__body">{{ block.settings.body }}</p>{%- endif -%}
+              <span class="halora-entry__read">Read the note</span>
+            </a>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora journal",
+  "tag": "section",
+  "class": "section-halora-journal",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The Journal" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Notes from the <em>apothecary.</em></p>" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Short reads on ritual, mineral, and the small ceremonies we keep." },
+    { "type": "blog", "id": "blog", "label": "Blog (auto-fills latest 3 articles, optional)" }
+  ],
+  "blocks": [
+    {
+      "type": "entry",
+      "name": "Manual entry",
+      "settings": [
+        { "type": "text", "id": "meta", "label": "Meta", "default": "Origin · 6 min read" },
+        { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>What the Salt <em>Range remembers.</em></p>" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "A short field note from Khewra — what 250 million years feels like under your hand." },
+        { "type": "url", "id": "url", "label": "URL" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [{
+    "name": "Halora journal",
+    "blocks": [
+      { "type": "entry", "settings": { "meta": "Origin · 6 min read", "heading": "<p>What the Salt <em>Range remembers.</em></p>", "body": "A short field note from Khewra — the world's oldest pink salt mine, and what 250 million years feels like under your hand." } },
+      { "type": "entry", "settings": { "meta": "Ritual · 4 min read", "heading": "<p>The five-minute <em>guasha practice.</em></p>", "body": "A morning stroke sequence with the salt tool. Where to start, where to draw, when to stop." } },
+      { "type": "entry", "settings": { "meta": "House · 5 min read", "heading": "<p>Why we chose <em>no gold.</em></p>", "body": "The brand book has one strict line about hardware. The reason is older than the brand." } }
+    ]
+  }]
+}
+{% endschema %}

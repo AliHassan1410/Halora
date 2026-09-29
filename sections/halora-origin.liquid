@@ -1,0 +1,30 @@
+
+<section class="halora-origin color-{{ section.settings.color_scheme }}">
+  <div class="halora-origin__wrap">
+    {%- if section.settings.kicker != blank -%}<p class="halora-kicker halora-origin__kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+    {%- if section.settings.heading != blank -%}<h2 class="halora-origin__h">{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- if section.settings.body_1 != blank -%}<p class="halora-origin__p">{{ section.settings.body_1 }}</p>{%- endif -%}
+    {%- if section.settings.body_2 != blank -%}<p class="halora-origin__p">{{ section.settings.body_2 }}</p>{%- endif -%}
+    {%- if section.settings.cta_label != blank -%}
+      <a href="{{ section.settings.cta_url }}" class="button halora-btn halora-btn--ghost halora-origin__btn">{{ section.settings.cta_label }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora origin",
+  "tag": "section",
+  "class": "section-halora-origin",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-4" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "From the oldest light on earth" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Two hundred and fifty million years ago, a sea closed. <em>We are still using its salt.</em></p>" },
+    { "type": "textarea", "id": "body_1", "label": "Body paragraph 1", "default": "Every piece begins as raw stone from Pakistan's Salt Range — the world's second-largest, and the oldest, deposit of pink Himalayan salt. We hand-blend in small batches, in-house, in Lahore." },
+    { "type": "textarea", "id": "body_2", "label": "Body paragraph 2", "default": "No synthetic fragrance. No parabens. No SLS. No gold-coded packaging. Silver only, where hardware appears at all. The salt does the work." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Read the Founder's Note" },
+    { "type": "url", "id": "cta_url", "label": "CTA URL" }
+  ],
+  "presets": [{ "name": "Halora origin" }]
+}
+{% endschema %}

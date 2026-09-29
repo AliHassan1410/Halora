@@ -1,0 +1,57 @@
+
+<section class="halora-principles color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <header class="halora-section-head">
+      {%- if section.settings.kicker != blank -%}<p class="halora-kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+      <hr class="halora-rule">
+      {%- if section.settings.heading != blank -%}<h2 class="halora-section-head__h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p class="halora-section-head__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    </header>
+    <div class="halora-principles__grid">
+      {%- for block in section.blocks -%}
+        <div class="halora-principle" {{ block.shopify_attributes }}>
+          {%- if block.settings.numeral != blank -%}<p class="halora-principle__num">{{ block.settings.numeral }}</p>{%- endif -%}
+          <div>
+            {%- if block.settings.heading != blank -%}<h4 class="halora-principle__h">{{ block.settings.heading }}</h4>{%- endif -%}
+            {%- if block.settings.body != blank -%}<p class="halora-principle__body">{{ block.settings.body }}</p>{%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora house rules",
+  "tag": "section",
+  "class": "section-halora-principles",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-4" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The House Rules" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>What we <em>don't</em> do.</p>" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "The shortest version of who we are is what we have chosen to leave out." }
+  ],
+  "blocks": [
+    {
+      "type": "rule",
+      "name": "House rule",
+      "settings": [
+        { "type": "text", "id": "numeral", "label": "Number", "default": "No 01" },
+        { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>No <em>synthetic fragrance.</em></p>" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Essential oils and natural infusions only." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Halora house rules",
+    "blocks": [
+      { "type": "rule", "settings": { "numeral": "No 01", "heading": "<p>No <em>synthetic fragrance.</em></p>", "body": "Essential oils and natural infusions only. If a scent needs a chemical to hold, we leave the scent out." } },
+      { "type": "rule", "settings": { "numeral": "No 02", "heading": "<p>No <em>gold, no brass.</em></p>", "body": "Silver only, where hardware appears at all. The mineral is the warm thing in the room; everything else stays cool." } },
+      { "type": "rule", "settings": { "numeral": "No 03", "heading": "<p>No <em>parabens, SLS, or fillers.</em></p>", "body": "The salt does the work. Plant-derived saponins, cold-pressed butters, essential oils. Nothing else." } },
+      { "type": "rule", "settings": { "numeral": "No 04", "heading": "<p>No <em>imported salt.</em></p>", "body": "Every gram is drawn from Pakistan's Salt Range. We are sitting on the oldest light on earth — there is no need to bring any in." } }
+    ]
+  }]
+}
+{% endschema %}

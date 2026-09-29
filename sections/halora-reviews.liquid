@@ -1,0 +1,60 @@
+<section class="halora-reviews color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <header class="halora-section-head">
+      {%- if section.settings.kicker != blank -%}<p class="halora-kicker">{{ section.settings.kicker }}</p>{%- endif -%}
+      <hr class="halora-rule">
+      {%- if section.settings.heading != blank -%}<h2 class="halora-section-head__h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p class="halora-section-head__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    </header>
+    <div class="halora-reviews__grid">
+      {%- for block in section.blocks -%}
+        <article class="halora-review" {{ block.shopify_attributes }}>
+          <span class="halora-review__quote">&ldquo;</span>
+          <div class="halora-review__stars" aria-label="5 stars">★ ★ ★ ★ ★</div>
+          {%- if block.settings.body != blank -%}<p class="halora-review__body">{{ block.settings.body }}</p>{%- endif -%}
+          <div class="halora-review__who">
+            {%- if block.settings.name != blank -%}<span class="halora-review__name">{{ block.settings.name }}</span>{%- endif -%}
+            <span class="halora-review__divider"></span>
+            {%- if block.settings.location != blank -%}<span class="halora-review__loc">{{ block.settings.location }}</span>{%- endif -%}
+            {%- if block.settings.verified -%}<span class="halora-review__verified">Verified</span>{%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora reviews",
+  "tag": "section",
+  "class": "section-halora-reviews",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "From the early circle" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>What people <em>have said.</em></p>" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "A few notes from the people who came before launch." }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Beautifully packaged. No plastic, no fuss. Hand-written care card. Felt like opening something made for me." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Aiman R." },
+        { "type": "text", "id": "location", "label": "Location", "default": "Lahore" },
+        { "type": "checkbox", "id": "verified", "label": "Verified purchase", "default": true }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [{
+    "name": "Halora reviews",
+    "blocks": [
+      { "type": "review", "settings": { "body": "The Rest Scrub has changed my evenings. The bathroom smells like lavender for an hour after. My shoulders forget the day.", "name": "Aiman R.", "location": "Lahore" } },
+      { "type": "review", "settings": { "body": "I bought the Halo Pillow for my mother's neck. She has used it every night since. The salt warms slowly and holds.", "name": "Sara K.", "location": "Karachi" } },
+      { "type": "review", "settings": { "body": "I keep the Arbor on my bedside. The glow is soft enough that my husband doesn't notice, and bright enough that I don't need my phone at three in the morning.", "name": "Noor F.", "location": "Islamabad" } }
+    ]
+  }]
+}
+{% endschema %}

@@ -1,0 +1,65 @@
+<section class="halora-rich color-{{ section.settings.color_scheme }}">
+  <div class="halora-rich__wrap">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'heading' -%}
+          {%- if block.settings.heading != blank -%}
+            <h2 class="halora-rich__h2" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+          {%- endif -%}
+        {%- when 'subheading' -%}
+          {%- if block.settings.text != blank -%}
+            <h3 class="halora-rich__h3" {{ block.shopify_attributes }}>{{ block.settings.text }}</h3>
+          {%- endif -%}
+        {%- when 'paragraph' -%}
+          {%- if block.settings.text != blank -%}
+            <div class="halora-rich__body" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          {%- endif -%}
+        {%- when 'kicker' -%}
+          {%- if block.settings.text != blank -%}
+            <p class="halora-kicker halora-rich__kicker" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+          {%- endif -%}
+        {%- when 'divider' -%}
+          <hr class="halora-rich__divider" {{ block.shopify_attributes }}>
+        {%- when 'quote' -%}
+          {%- if block.settings.text != blank -%}
+            <blockquote class="halora-rich__quote" {{ block.shopify_attributes }}>{{ block.settings.text }}</blockquote>
+          {%- endif -%}
+        {%- when 'button' -%}
+          {%- if block.settings.label != blank -%}
+            <p {{ block.shopify_attributes }}><a href="{{ block.settings.url }}" class="halora-btn{% if block.settings.style == 'ghost' %} halora-btn--ghost{% endif %}">{{ block.settings.label }}</a></p>
+          {%- endif -%}
+        {%- when 'pagecontent' -%}
+          {%- if page.content != blank -%}
+            <div class="halora-rich__body" {{ block.shopify_attributes }}>{{ page.content }}</div>
+          {%- endif -%}
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora rich text",
+  "tag": "section",
+  "class": "section-halora-rich",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "blocks": [
+    { "type": "kicker", "name": "Kicker label", "settings": [ { "type": "text", "id": "text", "label": "Text" } ] },
+    { "type": "heading", "name": "H2 heading", "settings": [ { "type": "richtext", "id": "heading", "label": "Heading" } ] },
+    { "type": "subheading", "name": "H3 subheading", "settings": [ { "type": "text", "id": "text", "label": "Subheading" } ] },
+    { "type": "paragraph", "name": "Paragraph", "settings": [ { "type": "richtext", "id": "text", "label": "Text" } ] },
+    { "type": "quote", "name": "Quote", "settings": [ { "type": "richtext", "id": "text", "label": "Text" } ] },
+    { "type": "divider", "name": "Divider", "settings": [] },
+    { "type": "button", "name": "Button", "settings": [
+      { "type": "text", "id": "label", "label": "Label" },
+      { "type": "url", "id": "url", "label": "URL" },
+      { "type": "select", "id": "style", "label": "Style", "default": "primary",
+        "options": [ { "value": "primary", "label": "Solid" }, { "value": "ghost", "label": "Outline" } ] }
+    ] },
+    { "type": "pagecontent", "name": "Page content (auto)", "settings": [], "limit": 1 }
+  ],
+  "presets": [{ "name": "Halora rich text" }]
+}
+{% endschema %}

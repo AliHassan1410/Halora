@@ -1,0 +1,44 @@
+
+<section class="halora-numbers color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <div class="halora-numbers__grid">
+      {%- for block in section.blocks -%}
+        <div class="halora-number" {{ block.shopify_attributes }}>
+          {%- if block.settings.figure != blank -%}<p class="halora-number__figure">{{ block.settings.figure }}</p>{%- endif -%}
+          {%- if block.settings.label != blank -%}<p class="halora-number__label">{{ block.settings.label }}</p>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Halora numbers",
+  "tag": "section",
+  "class": "section-halora-numbers",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "richtext", "id": "figure", "label": "Figure (use <em> for italic suffix)", "default": "<p>250<em>M</em></p>" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Years of mineral" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{
+    "name": "Halora numbers",
+    "blocks": [
+      { "type": "stat", "settings": { "figure": "<p>250<em>M</em></p>", "label": "Years of mineral" } },
+      { "type": "stat", "settings": { "figure": "<p>84</p>", "label": "Trace minerals" } },
+      { "type": "stat", "settings": { "figure": "<p>19</p>", "label": "Hand-blended pieces" } },
+      { "type": "stat", "settings": { "figure": "<p>1</p>", "label": "Pair of hands" } }
+    ]
+  }]
+}
+{% endschema %}

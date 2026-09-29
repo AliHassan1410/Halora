@@ -1,0 +1,165 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_crumbs": false,
+        "crumb_current": "",
+        "parent_label": "",
+        "parent_url": "",
+        "heading": "<p>Shipping & <em>Returns.</em></p>",
+        "subheading": "Hand-packed in Lahore, dispatched across Pakistan. COD nationwide, returns within seven days for unopened pieces, damages always replaced."
+      }
+    },
+    "main": {
+      "type": "halora-rich-text",
+      "blocks": {
+        "h1": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Shipping <em>across Pakistan.</em></p>"
+          }
+        },
+        "s1": {
+          "type": "subheading",
+          "settings": {
+            "text": "Delivery times"
+          }
+        },
+        "p1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ul><li><strong>Lahore & Karachi:</strong> 2–3 working days</li><li><strong>Islamabad, Rawalpindi, Faisalabad, Multan:</strong> 2–4 working days</li><li><strong>Other cities:</strong> 3–5 working days</li><li><strong>Remote areas:</strong> 5–7 working days</li></ul><p>Orders placed before 14:00 PKT typically ship the same day, Monday to Saturday.</p>"
+          }
+        },
+        "s2": {
+          "type": "subheading",
+          "settings": {
+            "text": "Shipping fees"
+          }
+        },
+        "p2": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ul><li><strong>Free shipping</strong> on all orders over <strong>PKR 5,000</strong></li><li><strong>PKR 300 COD handling fee</strong> for Cash on Delivery (goes to the courier)</li></ul>"
+          }
+        },
+        "s3": {
+          "type": "subheading",
+          "settings": {
+            "text": "How we pack"
+          }
+        },
+        "p3": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Each piece is padded with kraft fill, and tucked into a recyclable kraft box. A hand-written care card is included. Glass and salt-stone items are double-wrapped — we pack hard, but stones travel; if anything arrives chipped, we replace it.</p>"
+          }
+        },
+        "h2": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Payment <em>methods.</em></p>"
+          }
+        },
+        "p4": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ul><li><strong>Cash on Delivery</strong> — anywhere in Pakistan, PKR 300 handling fee</li><li><strong>Bank transfer</strong> Soon — no fee</li><li><strong>Card payment</strong> Soon</li></ul>"
+          }
+        },
+        "h3": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Returns &amp; <em>damages.</em></p>"
+          }
+        },
+        "s4": {
+          "type": "subheading",
+          "settings": {
+            "text": "What we accept"
+          }
+        },
+        "p5": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ul><li><strong>Unopened pieces</strong> within 7 days of delivery</li><li><strong>Damaged pieces</strong> — replaced at no cost, anytime</li><li><strong>Wrong item delivered</strong> — replaced at no cost</li></ul>"
+          }
+        },
+        "s5": {
+          "type": "subheading",
+          "settings": {
+            "text": "What we can't accept"
+          }
+        },
+        "p6": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ul><li>Opened soaps, scrubs, bath crystals — hygiene reasons</li><li>Salt lamps, plates, trays that show signs of use or moisture damage</li><li>Pieces returned after 7 days (unless damaged on arrival)</li></ul>"
+          }
+        },
+        "s6": {
+          "type": "subheading",
+          "settings": {
+            "text": "How to start a return"
+          }
+        },
+        "p7": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ol><li>Email <a href=\"mailto:haloraliving@gmail.com\">haloraliving@gmail.com</a> with your order number and reason.</li><li>Alternatively Whatsapp Us on +92327 8804400.</li><li>Refund or exchange processed within 3 working days of receiving the parcel back.</li></ol>"
+          }
+        },
+        "h4": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Questions <em>not covered here?</em></p>"
+          }
+        },
+        "p8": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Write to <a href=\"mailto:haloraliving@gmail.com\">haloraliving@gmail.com</a>. Replies within two working days, Monday to Saturday.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "s1",
+        "p1",
+        "s2",
+        "p2",
+        "s3",
+        "p3",
+        "h2",
+        "p4",
+        "h3",
+        "s4",
+        "p5",
+        "s5",
+        "p6",
+        "s6",
+        "p7",
+        "h4",
+        "p8"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "subhero",
+    "main"
+  ]
+}

@@ -1,0 +1,174 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subhero": {
+      "type": "halora-subhero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_crumbs": false,
+        "crumb_current": "",
+        "parent_label": "",
+        "parent_url": "",
+        "heading": "<p>Care <em>Guide.</em></p>",
+        "subheading": "Salt is a forgiving material — but it has one rule: it dissolves in water. Everything below follows from that. With this care, every HALORA piece lasts years."
+      }
+    },
+    "main": {
+      "type": "halora-rich-text",
+      "blocks": {
+        "h7": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Salt <em>soap bar.</em></p>"
+          }
+        },
+        "p7": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p><em>Pink Salt Soap Bar</em></p><ul><li><strong>Preferably use inside the jute pouch it ships with.</strong> The pouch acts as a lather bag — wet it, then move across damp skin. It keeps the bar from crumbling and gives you a gentle exfoliating cushion at the same time.</li><li>The rough side of the bar exfoliates once or twice a week; the smooth side cleanses daily. Work in slow circles, rinse, pat dry.</li><li><strong>Follow with a lotion or hydration cream.</strong> The salt draws moisture out of the skin — replenish it after every use with your usual body lotion, hydration cream, or oil so the skin stays soft rather than tight.</li><li><strong>Do not use on consecutive days.</strong> Give your skin at least a day's rest between sessions.</li><li><strong>Between uses:</strong> hang the pouch (with the bar still inside) on a hook or dry ledge so both dry fully. Never leave sitting in water.</li><li><strong>Shelf life:</strong> one bar lasts roughly 6–8 weeks of daily use.</li></ul>"
+          }
+        },
+        "h3": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Body <em>scrubs.</em></p>"
+          }
+        },
+        "p3": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p><em>Rest (Lavender), Clear (Coconut)</em></p><ul><li><strong>On arrival:</strong> put the jar in the fridge for a few hours before first use. Transit can loosen the whipped butters — chilling settles them back to their original creamy texture.</li><li><strong>Storage:</strong> lid tight, below 25°C. Direct sunlight melts the butters; refrigerate during peak summer if your bathroom runs hot.</li><li><strong>Use:</strong> on <strong>wet skin</strong>, 2–3 times a week. Massage in slow circles for <strong>thirty seconds</strong>, then rinse the scrub off with warm water. For a smoother, less oily finish, follow with soap to wash off any remaining butters.</li><li><strong>Patch test:</strong> on the inner arm before first full use.</li><li><strong>Shelf life:</strong> 4–6 weeks of normal use per jar; unopened, 12 months from manufacture.</li></ul>"
+          }
+        },
+        "h8": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Bath <em>salts.</em></p>"
+          }
+        },
+        "p8": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p><em>Evening Soak — Lavender, Morning Ritual — Peppermint</em></p><ul><li><strong>Full bath:</strong> Draw a warm bath. Pour <strong>two to three handfuls</strong> under the running tap so the crystals dissolve evenly. Soak fifteen to twenty minutes.</li><li><strong>Foot soak &amp; foot massage:</strong> One handful in a warm basin of water. Rest feet in the water for ten to fifteen minutes, then massage into the soles, arches, and heels — the heat opens the muscle, the salt softens the skin. Best after a long day on your feet.</li><li><strong>Storage:</strong> lid tight, dry cupboard. Keep the jar away from steam so the crystals don't clump.</li><li>Avoid on freshly waxed skin or open cuts — the salt will sting.</li></ul>"
+          }
+        },
+        "h5": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Guasha <em>tool.</em></p>"
+          }
+        },
+        "p5": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ul><li>Apply a facial oil or serum first (the tool needs glide). Draw upward and outward in slow strokes — five minutes.</li><li><strong>Cleaning:</strong> rinse briefly under cool water after use, pat dry immediately, store in the cotton pouch.</li><li><strong>If you drop it:</strong> a chipped edge can be smoothed with fine-grit sandpaper; a snapped tool can't be repaired.</li></ul>"
+          }
+        },
+        "h4": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Salt-therapy <em>pillows.</em></p>"
+          }
+        },
+        "p4": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p><em>Halo Pillow · rectangle, Hearth Pillow · round</em></p><ul><li><strong>For warmth:</strong> microwave for 90 - 120 seconds as per preference. Place over shoulders, neck, lower back. Holds warmth for upto an hour.</li><li><strong>Cleaning:</strong> spot-clean the cotton outer with a damp cloth. Never machine-wash.</li></ul>"
+          }
+        },
+        "h9": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Salt healing <em>light.</em></p>"
+          }
+        },
+        "p9": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p><em>Arbor</em></p><ul><li>Plugs directly into any wall socket. Switch on at sundown; leave on through the night — the bulb's warmth keeps the salt dry.</li><li><strong>Wipe with a dry cloth only.</strong> Never submerge; the salt dissolves.</li><li>If the surface ever weeps in monsoon humidity, leave it on for two hours — it will dry out completely.</li></ul>"
+          }
+        },
+        "h1": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Salt <em>lamps.</em></p>"
+          }
+        },
+        "p1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p><em>Radiance, USB Pink Salt Lamp</em></p><ul><li>Place on a stable, dry surface — wood, marble, ceramic. Avoid metal trays (long-term salt-metal contact can cause oxidation).</li><li><strong>Wipe with a dry cloth only.</strong> A microfibre or soft cotton cloth removes dust and any morning condensation. Never submerge.</li><li>For best longevity, leave the lamp on through the night — the bulb's warmth keeps the salt dry.</li><li>Bulbs are replaceable — a spare comes with the cord. Use the same wattage.</li><li>If the lamp ever weeps (puddle around the base in monsoon humidity), turn it on for two hours — it will dry out completely.</li></ul>"
+          }
+        },
+        "h6": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Kitchen <em>grinders &amp; refills.</em></p>"
+          }
+        },
+        "p6": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ul><li><strong>Adjustable grain:</strong> turn the dial at the base — clockwise for fine, anti-clockwise for coarse.</li><li>Refill from the kraft pouch when empty. Reseal with the included twist-tie.</li><li>Store the grinder upright in a dry cupboard.</li><li>Best applied at the <strong>end</strong> of cooking, not the beginning. The flavour reads cleaner.</li></ul>"
+          }
+        },
+        "h2": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Serving plate &amp; <em>tray.</em></p>"
+          }
+        },
+        "p2": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<ul><li><strong>Before first use:</strong> wipe with a damp cloth and dry completely.</li><li><strong>Cold or room-temperature service:</strong> place food directly on the plate. It picks up a gentle, even salt note in 10–15 minutes.</li><li><strong>Never submerge in water, dishwasher, or sink.</strong> The salt dissolves.</li><li><strong>Cleaning:</strong> wipe with a dry cloth after use. A natural antimicrobial surface — no soap needed.</li><li>Over years, the surface develops a soft patina. This is part of the object. With care, a plate lasts a decade.</li></ul>"
+          }
+        },
+        "cta": {
+          "type": "button",
+          "settings": {
+            "label": "Get in touch",
+            "url": "/pages/contact",
+            "style": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "h7",
+        "p7",
+        "h3",
+        "p3",
+        "h8",
+        "p8",
+        "h5",
+        "p5",
+        "h4",
+        "p4",
+        "h9",
+        "p9",
+        "h1",
+        "p1",
+        "h6",
+        "p6",
+        "h2",
+        "p2",
+        "cta"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "subhero",
+    "main"
+  ]
+}
