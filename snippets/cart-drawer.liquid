@@ -108,8 +108,6 @@
           <div id="CartDrawer-CartItems" class="drawer__contents js-contents">
             {%- if cart != empty -%}
               {%- render 'halora-cart-progress' -%}
-              {%- assign first_item_product = cart.items.first.product -%}
-              {%- render 'halora-frequently-bought', current_product: first_item_product, heading: 'You may also like.', compact: true -%}
               <div class="drawer__cart-items-wrapper">
                 <table class="cart-items" role="table">
                   <thead role="rowgroup">

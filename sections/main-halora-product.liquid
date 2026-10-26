@@ -174,6 +174,7 @@
             <input type="hidden" name="id" value="{{ current_variant.id }}" disabled>
             <div class="halora-pdp__actions">
               <button
+                id="halora-pdp-add-{{ section.id }}"
                 type="submit"
                 name="add"
                 class="halora-btn halora-pdp__add"
@@ -195,9 +196,101 @@
               <button type="button" class="halora-btn halora-btn--ghost halora-pdp__save" aria-label="Save for later">♡</button>
             </div>
             <p class="halora-pdp__error hidden" role="alert"></p>
-            {{ form | payment_button }}
+            {%- if product.handle == 'halo-pillow' -%}
+              {%- comment -%}
+                This one product: "Buy now" is not Shopify's native dynamic
+                checkout button (that renders in a secured iframe we can't hook
+                into — a click there goes straight to checkout with no event
+                we can catch). This button does its own add-to-cart request —
+                its own loading state, not the Add to Cart button's — then
+                flags the bundle dialog to send the shopper on to checkout
+                (instead of the cart) once it closes, which is what Buy Now
+                is supposed to do.
+              {%- endcomment -%}
+              <button
+                type="button"
+                class="halora-btn halora-btn--ghost halora-pdp__buy-now"
+                data-buy-now
+                data-buy-now-form="halora-product-form"
+                {% if current_variant.available == false %}aria-disabled="true"{% endif %}>
+                <span data-buy-now-label>Buy now</span>
+                <div class="loading__spinner hidden" data-buy-now-spinner>
+                  <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                </div>
+              </button>
+              <script>
+                (function () {
+                  var btn = document.currentScript.previousElementSibling;
+                  var form = btn && document.getElementById(btn.dataset.buyNowForm);
+                  var spinner = btn && btn.querySelector('[data-buy-now-spinner]');
+                  var errorEl = form && form.querySelector('.halora-pdp__error');
+                  if (!btn || !form) return;
+
+                  btn.addEventListener('click', function () {
+                    if (btn.getAttribute('aria-disabled') === 'true' || btn.disabled) return;
+
+                    // The bundle dialog reads this once the item is added, so
+                    // it knows to end at checkout rather than the cart.
+                    window.__haloraBuyNow = true;
+
+                    btn.disabled = true;
+                    btn.classList.add('loading');
+                    if (spinner) spinner.classList.remove('hidden');
+                    if (errorEl) errorEl.classList.add('hidden');
+
+                    var formData = new FormData(form);
+                    var drawer = document.querySelector('cart-drawer');
+                    if (drawer && typeof drawer.getSectionsToRender === 'function') {
+                      formData.append('sections', drawer.getSectionsToRender().map(function (s) { return s.id; }));
+                      formData.append('sections_url', window.location.pathname);
+                    }
+
+                    fetch((window.routes && window.routes.cart_add_url) || '/cart/add', {
+                      method: 'POST',
+                      headers: { Accept: 'application/javascript', 'X-Requested-With': 'XMLHttpRequest' },
+                      body: formData
+                    })
+                      .then(function (r) { return r.json(); })
+                      .then(function (data) {
+                        if (data.status) throw new Error(data.description || data.message || 'Could not add this item.');
+                        if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+                          publish(PUB_SUB_EVENTS.cartUpdate, {
+                            source: 'product-form',
+                            productVariantId: formData.get('id'),
+                            cartData: data
+                          });
+                        }
+                      })
+                      .catch(function (err) {
+                        window.__haloraBuyNow = false;
+                        if (errorEl) {
+                          errorEl.textContent = err.message || 'Could not add this item. Please try again.';
+                          errorEl.classList.remove('hidden');
+                        }
+                      })
+                      .finally(function () {
+                        btn.disabled = false;
+                        btn.classList.remove('loading');
+                        if (spinner) spinner.classList.add('hidden');
+                      });
+                  });
+                })();
+              </script>
+            {%- else -%}
+              {{ form | payment_button }}
+            {%- endif -%}
           {%- endform -%}
         </product-form>
+
+        {%- comment -%}
+          Add-on upsell. Deliberately OUTSIDE </product-form> — its radios and
+          buttons would otherwise be submitted with the pillow and break Add to
+          Cart. Renders only on the product chosen in this section's settings;
+          on every other product the snippet outputs nothing at all.
+        {%- endcomment -%}
+        {%- render 'halora-pillow-addons', product: product, section: section -%}
 
         <div class="halora-pdp__trust">
           <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h13l5 5v5h-3"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg><span>Ships 1–3 days</span></div>
@@ -353,7 +446,13 @@
   "tag": "section",
   "class": "section-halora-product",
   "settings": [
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "header", "content": "Add-on upsell" },
+    { "type": "paragraph", "content": "Shows a row of discounted add-ons under the buy buttons, on ONE product only. The 20% itself comes from the Buy X Get Y automatic discount in Discounts — this block only adds items at full price." },
+    { "type": "checkbox", "id": "addon_enabled", "label": "Show add-on row", "default": false },
+    { "type": "product", "id": "addon_anchor_product", "label": "Show it on this product", "info": "Leave empty and nothing renders anywhere." },
+    { "type": "text", "id": "addon_kicker", "label": "Kicker", "default": "Complete your ritual" },
+    { "type": "richtext", "id": "addon_heading", "label": "Heading", "default": "<p>Add any of these at <em>20% off</em> with your pillow.</p>" }
   ],
   "presets": [{ "name": "Halora product page" }]
 }

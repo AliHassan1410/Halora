@@ -1,0 +1,869 @@
+{%- comment -%}
+  HALORA — "Complete your ritual" add-on selector.
+
+  Renders under the buy buttons on ONE product only: whichever product is
+  picked in the "Add-on upsell" settings of the Halora product section.
+  Everywhere else this snippet produces nothing at all — no markup, no CSS.
+
+  WHAT THIS DOES NOT DO
+  There is no discount logic anywhere in here, by design. The 20% comes from
+  a native Shopify "Buy X Get Y" automatic discount configured in the admin.
+  This module only ever posts the FULL-price variant to /cart/add; Shopify
+  applies the reduction itself at cart and checkout. The struck-through price
+  shown on each card is marketing copy derived from the variant price, never
+  something that is sent anywhere.
+
+  Because the discount needs the pillow in the same order, the footnote says
+  so explicitly — a customer who lands here from elsewhere and adds only a
+  scrub pays full price, and the module must not imply otherwise.
+
+  ADDING
+  Each card has its own "Add" button for a single item. Ticking the checkboxes
+  and pressing "Add to cart" at the bottom adds every ticked item in one
+  request. The flavour radio on each card decides which variant that card adds.
+
+  LINEUP
+  Read from the pillow's metafield `custom.addon_lineup` (Multi-line text).
+  If that metafield is empty or not created, the fallback lineup below is used.
+  Format:
+
+      Card label::handle~Pill label,handle~Pill label|Card label::…
+
+  Products are resolved by handle, so titles, images, prices and stock all
+  come from the live product and cannot drift. Each product here is
+  single-variant; `first_available_variant` is used with a fallback, so a
+  sold-out option still renders (disabled) rather than vanishing.
+
+  PLACEMENT
+  Rendered immediately after </product-form> in main-halora-product.liquid —
+  deliberately OUTSIDE that form. Nesting controls inside the product form
+  would submit them with the pillow and break its Add to Cart.
+{%- endcomment -%}
+
+{%- liquid
+  # Two ways in: the product section (inline, under the buy buttons), or the
+  # site-wide render in theme.liquid (pillow_global), which only feeds the dialog.
+  assign addon_anchor = section.settings.addon_anchor_product
+  assign addon_on = false
+  if pillow_global == true
+    assign addon_on = true
+  elsif section.settings.addon_enabled and addon_anchor != blank and product.handle == addon_anchor.handle
+    assign addon_on = true
+  endif
+  assign addon_uid = section.id | default: 'global'
+-%}
+
+{%- if addon_on -%}
+  {%- liquid
+    assign addon_fallback = 'Scrub::rest-scrub-lavender~Lavender,clear-scrub-coconut~Coconut|Bath salt::evening-soak-lavender-bath-crystals~Lavender,morning-ritual-peppermint-bath-crystals~Peppermint|Grinder::garden-himalayan-pink-salt-coarse-mixed-herb~Mixed herb,origin-salt-grinder~Pink salt,spark-himalayan-pink-salt-coarse-chilli~Chilli'
+    assign addon_lineup = product.metafields.custom.addon_lineup.value | default: addon_fallback
+    assign addon_groups = addon_lineup | split: '|'
+  -%}
+
+  <style>
+    /* Clay accent matches halora-pdp-expandables, which sits directly below
+       this module. It is not a theme token yet — kept as one local custom
+       property so there is a single place to change it if it ever becomes one. */
+    .halora-addons {
+      --hu-accent: #A85E52;
+      --hu-ink: #2B2623;
+      --hu-cream: #FBF8F3;
+      margin: 28px 0 12px;
+      padding: 24px 20px 20px;
+      background: #FBF8F3;
+      border: 1px solid rgba(168, 94, 82, 0.18);
+    }
+
+    .halora-addons__head { margin: 0 0 18px; }
+    .halora-addons__kicker {
+      margin: 0 0 8px;
+      font-family: var(--halora-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--hu-accent);
+    }
+    .halora-addons__title {
+      margin: 0;
+      font-family: var(--halora-serif);
+      font-weight: 300;
+      font-size: 22px;
+      line-height: 1.2;
+      color: var(--hu-ink);
+    }
+    /* The heading setting is richtext, so it arrives wrapped in <p>. */
+    .halora-addons__title p { margin: 0; display: inline; }
+    .halora-addons__title em { font-style: italic; color: var(--hu-accent); }
+
+    .halora-addons__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    /* One horizontal row per add-on: checkbox, image, then choices. */
+    .halora-addons__card {
+      display: grid;
+      grid-template-columns: 16px 88px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      position: relative;
+      min-width: 0;
+      padding: 8px 10px;
+      background: #FFFFFF;
+      border: 1px solid rgba(43, 38, 35, 0.12);
+      border-radius: 10px;
+    }
+    .halora-addons__card.is-in-cart .halora-addons__name::after {
+      content: ' · in your cart';
+      font-family: var(--halora-sans);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--hu-accent);
+    }
+
+    /* Round, and centred vertically against the card's image and text.
+       The real checkbox is kept for keyboard and screen readers, but hidden;
+       the circle beside it is what people see. */
+    .halora-addons__check {
+      position: relative;
+      display: flex;
+      align-self: center;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .halora-addons__check input {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .halora-addons__dot {
+      display: grid;
+      place-items: center;
+      width: 16px;
+      height: 16px;
+      box-sizing: border-box;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1px solid rgba(43, 38, 35, 0.35);
+    }
+    .halora-addons__dot::after {
+      content: '';
+      width: 4px;
+      height: 8px;
+      border: solid var(--hu-cream);
+      border-width: 0 1.5px 1.5px 0;
+      transform: rotate(45deg) translate(-1px, -1px);
+      opacity: 0;
+    }
+    .halora-addons__check input:checked + .halora-addons__dot { background: var(--hu-ink); border-color: var(--hu-ink); }
+    .halora-addons__check input:checked + .halora-addons__dot::after { opacity: 1; }
+    .halora-addons__check input:focus-visible + .halora-addons__dot { outline: 2px solid var(--hu-accent); outline-offset: 2px; }
+    .halora-addons__check input:disabled + .halora-addons__dot { opacity: .35; }
+    .halora-addons__check input:disabled { cursor: not-allowed; }
+
+    /* Fixed box, so the image can never run into the text column. */
+    .halora-addons__media {
+      position: relative;
+      width: 88px;
+      height: 84px;
+      overflow: hidden;
+      background: var(--halora-dove);
+    }
+    .halora-addons__media img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .halora-addons__body { min-width: 0; display: flex; flex-direction: column; }
+
+    /* Label on the left, price in the top-right corner. */
+    .halora-addons__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin: 0 0 8px;
+    }
+    .halora-addons__group {
+      margin: 0;
+      font-family: var(--halora-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--halora-label);
+    }
+
+    .halora-addons__opts { border: 0; margin: 0 0 6px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+    .halora-addons__opts legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .halora-addons__opts input { position: absolute; opacity: 0; pointer-events: none; }
+    .halora-addons__opts label {
+      display: inline-block;
+      padding: 4px 9px;
+      font-family: var(--halora-sans);
+      font-size: 10.5px;
+      letter-spacing: 0.04em;
+      color: var(--halora-quiet);
+      border: 1px solid rgba(43, 38, 35, 0.16);
+      background: transparent;
+      cursor: pointer;
+    }
+    .halora-addons__opts input:checked + label { border-color: var(--hu-ink); color: var(--hu-cream); background: var(--hu-ink); }
+    .halora-addons__opts input:focus-visible + label { outline: 2px solid var(--hu-accent); outline-offset: 2px; }
+    .halora-addons__opts input:disabled + label { opacity: .4; cursor: not-allowed; text-decoration: line-through; }
+
+    /* Name and the single-item Add on one horizontal line. */
+    .halora-addons__buy {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .halora-addons__name {
+      margin: 0;
+      min-width: 0;
+      font-family: var(--halora-serif);
+      font-size: 15px;
+      line-height: 1.3;
+      color: var(--hu-ink);
+    }
+    .halora-addons__price {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1px;
+      flex: none;
+      white-space: nowrap;
+      font-family: var(--halora-sans);
+      font-size: 12px;
+      line-height: 1.3;
+    }
+    .halora-addons__was { color: var(--halora-label); text-decoration: line-through; }
+    .halora-addons__now { color: var(--hu-ink); font-weight: 500; }
+
+    .halora-addons__one {
+      flex: none;
+      padding: 6px 12px;
+      white-space: nowrap;
+      font-family: var(--halora-sans);
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--hu-ink);
+      background: transparent;
+      border: 1px solid var(--hu-ink);
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .halora-addons__one:hover:not(:disabled) { background: var(--hu-ink); color: var(--hu-cream); }
+    .halora-addons__one:focus-visible { outline: 2px solid var(--hu-accent); outline-offset: 2px; }
+    .halora-addons__one:disabled { opacity: .4; cursor: not-allowed; }
+    .halora-addons__one.is-busy { opacity: .6; cursor: progress; }
+
+    /* Bottom bar: running total on the left, the bulk add button on the right. */
+    .halora-addons__bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(43, 38, 35, 0.1);
+    }
+    .halora-addons__count {
+      margin: 0;
+      font-family: var(--halora-sans);
+      font-size: 11.5px;
+      color: var(--halora-quiet);
+    }
+    .halora-addons__add {
+      flex: none;
+      min-width: 150px;
+      padding: 10px 20px;
+      font-family: var(--halora-sans);
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--hu-ink);
+      background: transparent;
+      border: 1px solid var(--hu-ink);
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    /* Light until at least one add-on is ticked, then dark like "View cart". */
+    .halora-addons__add:not(:disabled) { background: var(--hu-ink); color: var(--hu-cream); }
+    .halora-addons__add:hover:not(:disabled) { background: var(--hu-accent); border-color: var(--hu-accent); }
+    .halora-addons__add:focus-visible { outline: 2px solid var(--hu-accent); outline-offset: 2px; }
+    .halora-addons__add:disabled { opacity: .45; cursor: not-allowed; }
+    .halora-addons__add.is-busy { opacity: .6; cursor: progress; }
+
+    /* Dialog shown after the pillow is added. The add-on section is moved into
+       it on open and returned to its slot on close, so nothing is duplicated. */
+    .halora-addon-modal {
+      --hu-accent: #A85E52;
+      --hu-ink: #2B2623;
+      --hu-cream: #FBF8F3;
+      width: min(680px, calc(100% - 24px));
+      max-height: calc(100vh - 32px);
+      max-height: calc(100dvh - 32px);
+      margin: auto;
+      padding: 0;
+      border: 0;
+      background: #FBF8F3;
+      color: var(--hu-ink);
+      overflow: auto;
+      box-shadow: 0 30px 60px -30px rgba(43, 38, 35, 0.55);
+    }
+    .halora-addon-modal::backdrop { background: rgba(43, 38, 35, 0.45); }
+    /* The theme's cart drawer must never show while this dialog is open. */
+    body.halora-addon-open cart-drawer,
+    body.halora-addon-open #CartDrawer-Overlay { display: none !important; }
+
+    .halora-addon-modal__actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: none;
+      margin-left: auto;
+    }
+    .halora-addon-modal__head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 22px 22px 16px;
+      border-bottom: 1px solid rgba(43, 38, 35, 0.1);
+    }
+    .halora-addon-modal__tick {
+      position: relative;
+      flex: none;
+      width: 34px;
+      height: 34px;
+      margin-top: 2px;
+      border-radius: 50%;
+      background: var(--hu-ink);
+    }
+    .halora-addon-modal__tick::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 6px;
+      height: 11px;
+      border: solid var(--hu-cream);
+      border-width: 0 1.5px 1.5px 0;
+      transform: translate(-50%, -62%) rotate(45deg);
+    }
+    .halora-addon-modal__headtext { flex: 1; min-width: 0; }
+    .halora-addon-modal__kicker {
+      margin: 0 0 4px;
+      font-family: var(--halora-sans);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--hu-accent);
+    }
+    .halora-addon-modal__title {
+      margin: 0 0 2px;
+      font-family: var(--halora-serif);
+      font-weight: 300;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+    .halora-addon-modal__sub {
+      margin: 0;
+      font-family: var(--halora-sans);
+      font-size: 12px;
+      color: var(--halora-quiet);
+    }
+    .halora-addon-modal__x {
+      flex: none;
+      box-sizing: border-box;
+      width: 32px;
+      height: 32px;
+      margin: 0;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(43, 38, 35, 0.16);
+      background: transparent;
+      color: var(--hu-ink);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .halora-addon-modal__body { padding: 18px 22px 0; }
+    .halora-addon-modal__body .halora-addons { margin: 0; padding: 0; background: transparent; border: 0; }
+    .halora-addon-modal__foot {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 18px 22px 22px;
+    }
+    .halora-addon-modal__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      height: 32px;
+      padding: 0 16px;
+      margin: 0;
+      line-height: 1;
+      font-family: var(--halora-sans);
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      color: var(--hu-ink);
+      background: transparent;
+      border: 1px solid var(--hu-ink);
+      cursor: pointer;
+    }
+    .halora-addon-modal__btn--solid { background: var(--hu-ink); color: var(--hu-cream); }
+    .halora-addon-modal__btn:hover { opacity: .85; }
+    .halora-addon-modal__btn:focus-visible,
+    .halora-addon-modal__x:focus-visible { outline: 2px solid var(--hu-accent); outline-offset: 2px; }
+
+    /* Phone only. Desktop layout above is unchanged. */
+    @media screen and (max-width: 749px) {
+      .halora-addons { padding: 18px 14px 16px; }
+      .halora-addons__title { font-size: 19px; }
+
+      .halora-addons__card {
+        grid-template-columns: 14px 64px minmax(0, 1fr);
+        gap: 10px;
+        padding: 8px;
+      }
+      .halora-addons__media { width: 64px; height: 76px; }
+      .halora-addons__top { gap: 8px; margin-bottom: 6px; }
+      .halora-addons__price { font-size: 11px; }
+      .halora-addons__opts { gap: 4px; margin-bottom: 6px; }
+      .halora-addons__opts label { padding: 3px 7px; font-size: 10px; }
+      .halora-addons__buy { flex-wrap: wrap; gap: 6px; }
+      .halora-addons__name { font-size: 13.5px; flex: 1 1 120px; }
+      .halora-addons__one { padding: 6px 10px; font-size: 9px; letter-spacing: 0.12em; white-space: nowrap; }
+
+      .halora-addon-modal__head { gap: 12px; padding: 18px 16px 14px; }
+      .halora-addon-modal__headtext { flex: 1 1 calc(100% - 50px); }
+      .halora-addon-modal__title { font-size: 19px; }
+      .halora-addon-modal__actions { width: 100%; margin-left: 0; margin-right: -4px; justify-content: flex-end; }
+      .halora-addon-modal__actions .halora-addon-modal__btn { flex: none; }
+      .halora-addon-modal__head { padding-right: 16px; }
+      .halora-addon-modal__headtext { padding-right: 36px; }
+      .halora-addon-modal__x { position: absolute; top: 12px; right: 12px; }
+      .halora-addon-modal__body { padding: 14px 16px 0; }
+      .halora-addon-modal { width: calc(100% - 20px); }
+    }
+
+    .halora-addons__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .halora-addons__foot { margin: 14px 0 0; font-family: var(--halora-sans); font-size: 11px; line-height: 1.5; color: var(--halora-quiet); }
+    .halora-addons__error { margin: 10px 0 0; font-family: var(--halora-sans); font-size: 11.5px; color: #B3261E; }
+    .halora-addons__error:empty { display: none; }
+  </style>
+
+  {%- comment -%}
+    Hidden on the page itself — this only ever appears inside the dialog
+    once the pillow has been added to the cart.
+  {%- endcomment -%}
+  <div data-addon-slot hidden>
+  <section
+    class="halora-addons"
+    data-halora-addons
+    aria-labelledby="halora-addons-title-{{ addon_uid }}">
+    <div class="halora-addons__head">
+      <p class="halora-addons__kicker">{{ section.settings.addon_kicker | default: 'Complete your ritual' | escape }}</p>
+      <h2 class="halora-addons__title" id="halora-addons-title-{{ addon_uid }}">
+        {{ section.settings.addon_heading | default: 'Add any of these at <em>20% off</em> with your pillow.' }}
+      </h2>
+    </div>
+
+    <ul class="halora-addons__grid">
+      {%- for group in addon_groups -%}
+        {%- liquid
+          assign gparts = group | split: '::'
+          assign glabel = gparts[0]
+          assign gopts = gparts[1] | split: ','
+          assign gname = 'halora-addon-' | append: addon_uid | append: '-' | append: forloop.index
+          assign first_handle = gopts[0] | split: '~' | first
+          assign first_product = all_products[first_handle]
+        -%}
+        {%- if first_product != blank -%}
+          <li class="halora-addons__card" data-addon-card>
+            <label class="halora-addons__check">
+              <input type="checkbox" data-addon-check aria-label="Add {{ first_product.title | escape }} to your order">
+              <span class="halora-addons__dot" aria-hidden="true"></span>
+            </label>
+
+            <div class="halora-addons__media">
+              <img
+                data-addon-image
+                src="{{ first_product.featured_image | image_url: width: 240 }}"
+                alt=""
+                width="240"
+                height="300"
+                loading="lazy"
+                decoding="async">
+            </div>
+
+            <div class="halora-addons__body">
+              <div class="halora-addons__top">
+                <p class="halora-addons__group">{{ glabel | escape }}</p>
+                <p class="halora-addons__price">
+                  <span class="halora-addons__was">PKR <span data-addon-was></span></span>
+                  <span class="halora-addons__now">PKR <span data-addon-now></span></span>
+                </p>
+              </div>
+
+              <fieldset class="halora-addons__opts">
+                <legend>Choose a {{ glabel | downcase | escape }}</legend>
+                {%- for opt in gopts -%}
+                  {%- liquid
+                    assign oparts = opt | split: '~'
+                    assign ohandle = oparts[0]
+                    assign olabel = oparts[1]
+                    assign oproduct = all_products[ohandle]
+                    assign ovariant = oproduct.first_available_variant | default: oproduct.variants.first
+                    assign odiscounted = ovariant.price | times: 80 | divided_by: 100
+                    assign oin_cart = false
+                    for line in cart.items
+                      if line.variant_id == ovariant.id
+                        assign oin_cart = true
+                      endif
+                    endfor
+                    assign oid = gname | append: '-' | append: forloop.index
+                  -%}
+                  {%- if oproduct != blank and ovariant != blank -%}
+                    <input
+                      type="radio"
+                      name="{{ gname }}"
+                      id="{{ oid }}"
+                      value="{{ ovariant.id }}"
+                      data-addon-option
+                      data-variant="{{ ovariant.id }}"
+                      data-title="{{ oproduct.title | escape }}"
+                      data-image="{{ oproduct.featured_image | image_url: width: 240 }}"
+                      data-was="{{ ovariant.price | money_without_currency }}"
+                      data-now="{{ odiscounted | money_without_currency }}"
+                      data-now-cents="{{ odiscounted }}"
+                      data-available="{% if ovariant.available %}true{% else %}false{% endif %}"
+                      data-in-cart="{% if oin_cart %}true{% else %}false{% endif %}"
+                      {% unless ovariant.available %}disabled{% endunless %}
+                      {% if forloop.first %}checked{% endif %}>
+                    <label for="{{ oid }}">{{ olabel | escape }}</label>
+                  {%- endif -%}
+                {%- endfor -%}
+              </fieldset>
+
+              <div class="halora-addons__buy">
+                <p class="halora-addons__name" data-addon-name>{{ first_product.title }}</p>
+              </div>
+            </div>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+    <div class="halora-addons__bar">
+      <p class="halora-addons__count" data-addon-count>Select the add-ons you want</p>
+      <button type="button" class="halora-addons__add" data-addon-submit disabled>Add to cart</button>
+    </div>
+
+    <p class="halora-addons__status" role="status" aria-live="polite" data-addon-status></p>
+    <p class="halora-addons__error" role="alert" data-addon-error></p>
+    <p class="halora-addons__foot" id="halora-addons-foot-{{ addon_uid }}">
+      Added at full price — the 20% comes off automatically in your cart, as long as the {{ product.title }} is in the same order.
+    </p>
+  </section>
+  </div>
+
+  <dialog class="halora-addon-modal" data-addon-modal aria-labelledby="halora-addon-modal-title-{{ addon_uid }}">
+    <div class="halora-addon-modal__head">
+      <span class="halora-addon-modal__tick" aria-hidden="true"></span>
+      <div class="halora-addon-modal__headtext">
+        <p class="halora-addon-modal__kicker">Added successfully</p>
+        <h3 class="halora-addon-modal__title" id="halora-addon-modal-title-{{ addon_uid }}">Your pillow is now in your cart.</h3>
+        <p class="halora-addon-modal__sub">{{ product.title | escape }}</p>
+      </div>
+      <div class="halora-addon-modal__actions">
+        <a class="halora-addon-modal__btn halora-addon-modal__btn--solid" href="{{ routes.cart_url }}">View cart</a>
+        <button type="button" class="halora-addon-modal__x" data-addon-close aria-label="Close">&times;</button>
+      </div>
+    </div>
+
+    <div class="halora-addon-modal__body" data-addon-modal-body></div>
+  </dialog>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-halora-addons]');
+      if (!root || root.dataset.addonsReady === 'true') return;
+      root.dataset.addonsReady = 'true';
+
+      var errorEl = root.querySelector('[data-addon-error]');
+      var statusEl = root.querySelector('[data-addon-status]');
+      var countEl = root.querySelector('[data-addon-count]');
+      var submitBtn = root.querySelector('[data-addon-submit]');
+
+      // Variants already in the cart when the page rendered, plus anything
+      // added since. Keyed by variant id so each flavour tracks separately.
+      var inCart = new Set();
+      root.querySelectorAll('[data-addon-option]').forEach(function (opt) {
+        if (opt.dataset.inCart === 'true') inCart.add(opt.dataset.variant);
+      });
+
+      function selected(card) {
+        return card.querySelector('[data-addon-option]:checked');
+      }
+
+      function money(cents) {
+        return (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function paint(card) {
+        var opt = selected(card);
+        if (!opt) return;
+        var img = card.querySelector('[data-addon-image]');
+
+        if (img && img.getAttribute('src') !== opt.dataset.image) img.setAttribute('src', opt.dataset.image);
+        card.querySelector('[data-addon-name]').textContent = opt.dataset.title;
+        card.querySelector('[data-addon-was]').textContent = opt.dataset.was;
+        card.querySelector('[data-addon-now]').textContent = opt.dataset.now;
+
+        card.classList.toggle('is-in-cart', inCart.has(opt.dataset.variant));
+      }
+
+      // Sold out, or already in the cart — this card can never be picked.
+      function isHardBlocked(card) {
+        var opt = selected(card);
+        return !opt || opt.dataset.available !== 'true' || inCart.has(opt.dataset.variant);
+      }
+
+      // "Any ONE of these" — ticking a card swaps the pick straight to it (see
+      // the change listener below). This just clears a tick that became
+      // hard-blocked (sold out / already added) and refreshes the bar.
+      function updateBar() {
+        var checkedBox = null;
+        root.querySelectorAll('[data-addon-card]').forEach(function (card) {
+          var cb = card.querySelector('[data-addon-check]');
+          if (isHardBlocked(card)) {
+            cb.checked = false;
+            cb.disabled = true;
+            return;
+          }
+          cb.disabled = false;
+          if (cb.checked) checkedBox = cb;
+        });
+
+        var total = checkedBox ? parseInt(selected(checkedBox.closest('[data-addon-card]')).dataset.nowCents, 10) : 0;
+        submitBtn.disabled = !checkedBox;
+        countEl.textContent = checkedBox ? '1 selected · PKR ' + money(total) : 'Select the add-on you want';
+      }
+
+      // Refresh the drawer and the cart count WITHOUT opening the drawer.
+      // The theme's own renderContents() always calls open(), which would
+      // interrupt someone part-way through adding a second and third add-on.
+      function refresh(sections) {
+        var drawer = document.querySelector('cart-drawer');
+        if (!drawer || !sections || typeof drawer.getSectionsToRender !== 'function') return;
+        drawer.getSectionsToRender().forEach(function (section) {
+          var el = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
+          var html = sections[section.id];
+          if (!el || !html) return;
+          var parsed = new DOMParser().parseFromString(html, 'text/html').querySelector(section.selector || '.shopify-section');
+          if (parsed) el.innerHTML = parsed.innerHTML;
+        });
+        var inner = drawer.querySelector('.drawer__inner');
+        if (inner) inner.classList.remove('is-empty');
+      }
+
+      // A successful bundle add just closes the dialog — the 'close' listener
+      // (returnSection → proceedAfterClose, defined below) takes it from
+      // there: the cart drawer, or checkout if this was a Buy Now pick.
+      function showCart() {
+        if (modal && modal.open) {
+          modal.close();
+        } else {
+          proceedAfterClose();
+        }
+      }
+
+      // One request for any number of cards. `btn` is whichever button the
+      // user pressed (the per-card Add or the bottom bar), shown busy meanwhile.
+      function addCards(cards, btn) {
+        var items = cards.map(function (card) {
+          return { id: parseInt(selected(card).dataset.variant, 10), quantity: 1 };
+        });
+        if (!items.length) return;
+
+        errorEl.textContent = '';
+        btn.classList.add('is-busy');
+        btn.disabled = true;
+        btn.textContent = 'Adding…';
+
+        var payload = { items: items };
+        var drawer = document.querySelector('cart-drawer');
+        if (drawer && typeof drawer.getSectionsToRender === 'function') {
+          payload.sections = drawer.getSectionsToRender().map(function (s) { return s.id; });
+          payload.sections_url = window.location.pathname;
+        }
+
+        fetch((window.routes && window.routes.cart_add_url) || '/cart/add', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/javascript',
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify(payload)
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data.status) throw new Error(data.description || data.message || 'Could not add these items.');
+            cards.forEach(function (card) {
+              inCart.add(selected(card).dataset.variant);
+              card.querySelector('[data-addon-check]').checked = false;
+            });
+            refresh(data.sections);
+            showCart();
+            statusEl.textContent = items.length + (items.length === 1 ? ' item' : ' items') + ' added to your cart.';
+          })
+          .catch(function (err) {
+            errorEl.textContent = err.message || 'Could not add these items. Please try again.';
+            statusEl.textContent = '';
+          })
+          .finally(function () {
+            btn.classList.remove('is-busy');
+            if (btn === submitBtn) btn.textContent = 'Add to cart';
+            root.querySelectorAll('[data-addon-card]').forEach(paint);
+            updateBar();
+          });
+      }
+
+      root.querySelectorAll('[data-addon-card]').forEach(function (card) {
+        paint(card);
+        card.addEventListener('change', function (e) {
+          if (e.target.matches('[data-addon-option]')) paint(card);
+          if (e.target.matches('[data-addon-check]') && e.target.checked) {
+            // Ticking one swaps the pick straight to it — the previous pick,
+            // anywhere in the list, is unticked in the same action.
+            root.querySelectorAll('[data-addon-check]').forEach(function (cb) {
+              if (cb !== e.target) cb.checked = false;
+            });
+          }
+          updateBar();
+        });
+      });
+
+      submitBtn.addEventListener('click', function () {
+        var cards = Array.prototype.slice.call(root.querySelectorAll('[data-addon-check]:checked'))
+          .map(function (check) { return check.closest('[data-addon-card]'); });
+        addCards(cards, submitBtn);
+      });
+      updateBar();
+
+      // Pillow-added dialog. The add-on section moves into it when the pillow
+      // is added from this page, and goes back to its slot when it closes.
+      var modal = document.querySelector('[data-addon-modal]');
+      var slot = document.querySelector('[data-addon-slot]');
+      var modalBody = modal && modal.querySelector('[data-addon-modal-body]');
+      var anchorVariants = {{ product.variants | map: 'id' | json }};
+
+      // The drawer's open() can run a moment after this script's first call,
+      // and it locks page scroll. Close it and release that lock, both now and
+      // once more shortly after, so the page is never left stuck.
+      function closeDrawer() {
+        var drawer = document.querySelector('cart-drawer');
+        if (drawer && typeof drawer.close === 'function') drawer.close();
+        document.body.classList.remove('overflow-hidden');
+      }
+
+      function openModal() {
+        if (!modal || modal.open) return;
+        closeDrawer();
+        setTimeout(closeDrawer, 300);
+        document.body.classList.add('halora-addon-open');
+        modalBody.appendChild(root);
+        modal.showModal();
+      }
+
+      // Runs no matter how the dialog closes — the ×, the backdrop, Escape,
+      // or a successful bundle add. A Buy Now pick sends the shopper on to
+      // checkout; anything else opens the cart drawer so they can see it.
+      function proceedAfterClose() {
+        document.body.classList.remove('halora-addon-open');
+        if (window.__haloraBuyNow) {
+          window.__haloraBuyNow = false;
+          window.location.href = '/checkout';
+          return;
+        }
+        var drawer = document.querySelector('cart-drawer');
+        if (drawer && typeof drawer.open === 'function') drawer.open();
+      }
+
+      function returnSection() {
+        if (slot && root.parentNode !== slot) slot.appendChild(root);
+        proceedAfterClose();
+      }
+
+      if (modal) {
+        modal.addEventListener('close', returnSection);
+        modal.addEventListener('click', function (e) { if (e.target === modal) modal.close(); });
+        modal.querySelectorAll('[data-addon-close]').forEach(function (b) {
+          b.addEventListener('click', function () { modal.close(); });
+        });
+      }
+
+      function listenForPillow() {
+        if (typeof subscribe !== 'function' || typeof PUB_SUB_EVENTS === 'undefined') return;
+        // Only real "add" actions count: the product form and quick-add.
+        // Quantity changes in the cart are not adds, so they do not open this.
+        var addSources = ['product-form', 'quick-add'];
+
+        function pillowWasAdded(event) {
+          var ids = [];
+          if (event.productVariantId) ids.push(parseInt(event.productVariantId, 10));
+          if (event.cartData && event.cartData.items) {
+            event.cartData.items.forEach(function (item) {
+              ids.push(parseInt(item.variant_id || item.id, 10));
+            });
+          }
+          return ids.some(function (id) { return anchorVariants.indexOf(id) !== -1; });
+        }
+
+        subscribe(PUB_SUB_EVENTS.cartUpdate, function (event) {
+          if (!event || addSources.indexOf(event.source) === -1) return;
+          if (!pillowWasAdded(event)) return;
+          // One tick, so the cart drawer's own open runs first and this replaces it.
+          setTimeout(openModal, 0);
+        });
+      }
+
+      // pubsub.js and constants.js are deferred, so wait for them.
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', listenForPillow);
+      else listenForPillow();
+    })();
+  </script>
+{%- endif -%}

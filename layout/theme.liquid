@@ -425,11 +425,13 @@
       >
     {%- endif -%}
 
-    <script>
+        <script>
       if (Shopify.designMode) {
         document.documentElement.classList.add('shopify-design-mode');
+        
       }
     </script>
+
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
@@ -439,6 +441,15 @@
 
     {%- if settings.cart_type == 'drawer' -%}
       {%- render 'cart-drawer' -%}
+    {%- endif -%}
+
+    {%- comment -%}
+      Pillow bundle dialog, available on every page, so adding the pillow from a
+      collection, quick-add or the cart opens it too. The pillow's own product
+      page already renders the bundle inline, so it is skipped there.
+    {%- endcomment -%}
+    {%- if product.handle != 'halo-pillow' -%}
+      {%- render 'halora-pillow-addons', product: all_products['halo-pillow'], pillow_global: true -%}
     {%- endif -%}
 
     {% sections 'header-group' %}

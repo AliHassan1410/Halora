@@ -18,7 +18,9 @@
         "parent_label": "",
         "parent_url": "",
         "heading": "<p>Shipping & <em>Returns.</em></p>",
-        "subheading": "Hand-packed in Lahore, dispatched across Pakistan. COD nationwide, returns within seven days for unopened pieces, damages always replaced."
+        "subheading": "Hand-packed in Lahore, dispatched across Pakistan. COD nationwide, returns within seven days for unopened pieces, damages always replaced.",
+        "all_heading": "",
+        "all_intro": ""
       }
     },
     "main": {
@@ -63,7 +65,7 @@
         "p3": {
           "type": "paragraph",
           "settings": {
-            "text": "<p>Each piece is padded with kraft fill, and tucked into a recyclable kraft box. A hand-written care card is included. Glass and salt-stone items are double-wrapped — we pack hard, but stones travel; if anything arrives chipped, we replace it.</p>"
+            "text": "<p>Each piece is padded with kraft fill, and tucked into a recyclable kraft box. A hand-written care card is included. Glass and salt-stone items are double-wrapped — we pack hard, but stones travel; if anything arrives cracked, we replace it.</p>"
           }
         },
         "h2": {
